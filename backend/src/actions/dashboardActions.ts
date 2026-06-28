@@ -1,8 +1,17 @@
 'use server';
 
+import pool from '@/lib/db';
+
 export async function getDashboardData() {
   try {
-    // Return mock data for the dashboard
+    // Fetch real counts from DB
+    const [productsResult]: any = await pool.query('SELECT COUNT(*) as count FROM products');
+    const [categoriesResult]: any = await pool.query('SELECT COUNT(*) as count FROM categories');
+    
+    const totalProducts = productsResult[0].count;
+    const totalCategories = categoriesResult[0].count;
+
+    // Return combined real + mock data for the dashboard
     return {
       success: true,
       data: {
@@ -18,6 +27,8 @@ export async function getDashboardData() {
           salesPerformance: 8,
           newCustomers: 45,
           totalCustomers: 1250,
+          totalProducts: totalProducts,
+          totalCategories: totalCategories,
         },
         charts: {
           topProducts: [

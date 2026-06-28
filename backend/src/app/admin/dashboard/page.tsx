@@ -24,6 +24,8 @@ interface DashboardData {
     salesPerformance: number;
     newCustomers: number;
     totalCustomers: number;
+    totalProducts: number;
+    totalCategories: number;
   };
   charts: {
     topProducts: Array<{name: string, sold: string, revenue: string}>;
@@ -84,6 +86,14 @@ export default function Dashboard() {
         <div className={styles.statCard}>
           <h3 className={styles.statTitle}>Total Customers</h3>
           <p className={styles.statValue}>{data.metrics.totalCustomers}</p>
+        </div>
+        <div className={styles.statCard}>
+          <h3 className={styles.statTitle}>Total Products</h3>
+          <p className={styles.statValue}>{data.metrics.totalProducts}</p>
+        </div>
+        <div className={styles.statCard}>
+          <h3 className={styles.statTitle}>Total Categories</h3>
+          <p className={styles.statValue}>{data.metrics.totalCategories}</p>
         </div>
       </section>
 
