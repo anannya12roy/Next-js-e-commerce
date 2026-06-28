@@ -375,6 +375,214 @@ app.delete('/api/categories/:id', async (req: Request, res: Response): Promise<v
   }
 });
 
+// --- Attributes CRUD ---
+
+// Get all attributes with their values
+app.get('/api/attributes', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const [attributes]: any = await pool.query('SELECT * FROM attributes ORDER BY id DESC');
+    const [values]: any = await pool.query('SELECT * FROM attribute_values ORDER BY sort_order ASC, id ASC');
+    
+    // Group values by attribute_id
+    const attributesWithValues = attributes.map((attr: any) => {
+      return {
+        ...attr,
+        values: values.filter((val: any) => val.attribute_id === attr.id)
+      };
+    });
+    
+    res.json(attributesWithValues);
+  } catch (error) {
+    console.error('Error fetching attributes:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Get single attribute with values
+app.get('/api/attributes/:id', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const [rows]: any = await pool.query('SELECT * FROM attributes WHERE id = ?', [req.params.id]);
+    if (rows.length === 0) {
+      res.status(404).json({ error: 'Attribute not found' });
+      return;
+    }
+    const attr = rows[0];
+    const [values]: any = await pool.query('SELECT * FROM attribute_values WHERE attribute_id = ? ORDER BY sort_order ASC, id ASC', [req.params.id]);
+    
+    attr.values = values;
+    res.json(attr);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Create attribute
+app.post('/api/attributes', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { name } = req.body;
+    if (!name) {
+      res.status(400).json({ error: 'Attribute name is required' });
+      return;
+    }
+    const [result]: any = await pool.query(
+      `INSERT INTO attributes (name) VALUES (?)`,
+      [name]
+    );
+    res.status(201).json({ id: result.insertId, message: 'Attribute created' });
+  } catch (error) {
+    console.error('Error creating attribute:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update attribute
+app.put('/api/attributes/:id', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { name } = req.body;
+    if (!name) {
+      res.status(400).json({ error: 'Attribute name is required' });
+      return;
+    }
+    await pool.query(
+      `UPDATE attributes SET name=? WHERE id=?`,
+      [name, req.params.id]
+    );
+    res.json({ message: 'Attribute updated' });
+  } catch (error) {
+    console.error('Error updating attribute:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Delete attribute
+app.delete('/api/attributes/:id', async (req: Request, res: Response): Promise<void> => {
+  try {
+    await pool.query('DELETE FROM attributes WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Attribute deleted' });
+  } catch (error) {
+    console.error('Error deleting attribute:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// --- Attribute Values CRUD ---
+
+// Create attribute value
+app.post('/api/attribute-values', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { attribute_id, value, alias_value, sort_order } = req.body;
+    if (!attribute_id || !value) {
+      res.status(400).json({ error: 'Attribute ID and value are required' });
+      return;
+    }
+    const [result]: any = await pool.query(
+      `INSERT INTO attribute_values (attribute_id, value, alias_value, sort_order) VALUES (?, ?, ?, ?)`,
+      [attribute_id, value, alias_value || value, sort_order || 0]
+    );
+    res.status(201).json({ id: result.insertId, message: 'Attribute value created' });
+  } catch (error) {
+    console.error('Error creating attribute value:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update attribute value
+app.put('/api/attribute-values/:id', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { value, alias_value, sort_order } = req.body;
+    await pool.query(
+      `UPDATE attribute_values SET value=?, alias_value=?, sort_order=? WHERE id=?`,
+      [value, alias_value || value, sort_order || 0, req.params.id]
+    );
+    res.json({ message: 'Attribute value updated' });
+  } catch (error) {
+    console.error('Error updating attribute value:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Delete attribute value
+app.delete('/api/attribute-values/:id', async (req: Request, res: Response): Promise<void> => {
+  try {
+    await pool.query('DELETE FROM attribute_values WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Attribute value deleted' });
+  } catch (error) {
+    console.error('Error deleting attribute value:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// --- Product Features CRUD ---
+
+app.get('/api/features/:type', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const [rows]: any = await pool.query('SELECT * FROM product_features WHERE type = ? ORDER BY id DESC', [req.params.type]);
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching features:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/api/features/:type', upload.single('image'), async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { name, description, status } = req.body;
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+    
+    if (!name) {
+      res.status(400).json({ error: 'Name is required' });
+      return;
+    }
+    const [result]: any = await pool.query(
+      `INSERT INTO product_features (type, name, description, image, status) VALUES (?, ?, ?, ?, ?)`,
+      [req.params.type, name, description || '', imagePath, status || 'Active']
+    );
+    res.status(201).json({ id: result.insertId, message: 'Created successfully' });
+  } catch (error) {
+    console.error('Error creating feature:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.put('/api/features/:type/:id', upload.single('image'), async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { name, description, status } = req.body;
+    
+    if (!name) {
+      res.status(400).json({ error: 'Name is required' });
+      return;
+    }
+    
+    if (req.file) {
+      const imagePath = `/uploads/${req.file.filename}`;
+      await pool.query(
+        `UPDATE product_features SET name=?, description=?, status=?, image=? WHERE id=? AND type=?`,
+        [name, description || '', status || 'Active', imagePath, req.params.id, req.params.type]
+      );
+    } else {
+      await pool.query(
+        `UPDATE product_features SET name=?, description=?, status=? WHERE id=? AND type=?`,
+        [name, description || '', status || 'Active', req.params.id, req.params.type]
+      );
+    }
+    
+    res.json({ message: 'Updated successfully' });
+  } catch (error) {
+    console.error('Error updating feature:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.delete('/api/features/:type/:id', async (req: Request, res: Response): Promise<void> => {
+  try {
+    await pool.query('DELETE FROM product_features WHERE id = ? AND type = ?', [req.params.id, req.params.type]);
+    res.json({ message: 'Deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting feature:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to the E-Commerce API');
 });
