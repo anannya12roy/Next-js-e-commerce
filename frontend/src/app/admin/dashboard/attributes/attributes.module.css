@@ -1,0 +1,236 @@
+.container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* Main content area (Left) */
+.mainCol {
+  flex: 2;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.cardHeader {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  background-color: #f9fafb;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.table td {
+  padding: 16px 24px;
+  font-size: 14px;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.valuesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.valueChip {
+  background-color: #e5e7eb;
+  color: #374151;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* Sidebar area (Right) */
+.sideCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.formCard {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.formBody {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.input {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  background-color: white;
+  color: #1f2937;
+  transition: border-color 0.2s;
+}
+
+.input::file-selector-button {
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: background-color 0.2s;
+}
+
+.input::file-selector-button:hover {
+  background-color: #e5e7eb;
+}
+
+.input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.submitBtn {
+  align-self: flex-end;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitBtn:hover {
+  background-color: #059669;
+}
+
+.submitBtn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.uploadBtn {
+  background-color: #f97316;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.exportBtn {
+  background-color: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.uploadGroup {
+  display: flex;
+  gap: 8px;
+}
+
+/* Action buttons */
+.actionBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: opacity 0.2s;
+}
+
+.actionBtn:hover {
+  opacity: 0.8;
+}
+
+.settingsBtn {
+  background-color: #bae6fd;
+  color: #0284c7;
+}
+
+.editBtn {
+  background-color: #ffedd5;
+  color: #ea580c;
+}
+
+.deleteBtn {
+  background-color: #fce7f3;
+  color: #be185d;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 32px;
+  color: #6b7280;
+}

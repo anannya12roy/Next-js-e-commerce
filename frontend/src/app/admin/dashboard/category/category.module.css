@@ -1,0 +1,261 @@
+.container {
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2b3674;
+}
+
+.addBtn {
+  background-color: #e3202e;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addBtn:hover {
+  background-color: #b51723;
+}
+
+.tableContainer {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid #e9edf7;
+}
+
+.table th {
+  color: #a3aed1;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.table td {
+  color: #2b3674;
+  font-size: 0.95rem;
+}
+
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+  text-transform: capitalize;
+}
+
+.statusActive {
+  background-color: #e0f8f1;
+  color: #05cd99;
+}
+
+.statusInactive {
+  background-color: #ffe5e5;
+  color: #e3202e;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editBtn, .deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.editBtn {
+  color: #4318FF;
+}
+
+.editBtn:hover {
+  background: #f0edff;
+}
+
+.deleteBtn {
+  color: #e3202e;
+}
+
+.deleteBtn:hover {
+  background: #ffe5e5;
+}
+
+/* --- Form View Styles (Category Information Card) --- */
+.formCard {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.formCardHeader {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e9edf7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formCardTitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2b3674;
+  margin: 0;
+}
+
+.backBtn {
+  background: none;
+  border: 1px solid #e9edf7;
+  color: #2b3674;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backBtn:hover {
+  background: #f4f7fe;
+  border-color: #a3aed1;
+}
+
+.formBody {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Side-by-side layout like the image */
+.formRow {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  align-items: flex-start;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.formRow:last-child {
+  border-bottom: none;
+}
+
+.formLabel {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #4b5563;
+  padding-top: 0.5rem;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.inputField {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #4318FF;
+  box-shadow: 0 0 0 3px rgba(67, 24, 255, 0.1);
+}
+
+textarea.inputField {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.fileInputWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.fileInputBtn {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  border-right: 1px solid #d1d5db;
+  cursor: pointer;
+}
+
+.fileInputText {
+  padding: 0.75rem 1rem;
+  color: #1f2937;
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.helpText {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.formFooter {
+  padding: 1.5rem 2rem;
+  background-color: #f9fafb;
+  border-top: 1px solid #e9edf7;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.submitBtnCard {
+  background-color: #e3202e;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.95rem;
+}
+
+.submitBtnCard:hover {
+  background-color: #b51723;
+}

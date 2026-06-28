@@ -1,0 +1,161 @@
+.layoutContainer {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f7fe;
+  font-family: 'Inter', sans-serif;
+}
+
+.sidebar {
+  width: 280px;
+  background-color: white;
+  border-right: 1px solid #e9edf7;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  padding: 0 1.5rem;
+}
+
+.logoText {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #e3202e;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.searchContainer {
+  padding: 0 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background-color: #f0f2f5;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+}
+.searchInput::placeholder {
+  color: #9ca3af;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.navItemWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.5rem;
+  color: #a3aed1;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navItemContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navIcon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5px;
+}
+
+.navItem.active {
+  background-color: #e3202e;
+  color: white;
+}
+
+.navItem:hover:not(.active) {
+  background-color: #f9fafb;
+  color: #e3202e;
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 0.5rem 0;
+}
+
+.subNavItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.6rem 1.5rem 0.6rem 3.5rem;
+  color: #a3aed1;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.subNavItem:hover {
+  color: #e3202e;
+}
+
+.subNavItem.activeSub {
+  color: #e3202e;
+}
+
+.bullet {
+  width: 6px;
+  height: 6px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.bulletFilled {
+  background-color: currentColor;
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s;
+}
+
+.chevronExpanded {
+  transform: rotate(180deg);
+}
+
+.mainContent {
+  flex: 1;
+  overflow-y: auto;
+}
