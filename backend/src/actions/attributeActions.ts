@@ -74,3 +74,59 @@ export async function deleteAttribute(id: number) {
     return { success: false, error: 'Internal server error' };
   }
 }
+
+export async function getAttribute(id: number) {
+  try {
+    const [attribute]: any = await pool.query('SELECT * FROM attributes WHERE id = ?', [id]);
+    if (attribute.length === 0) return { success: false, error: 'Attribute not found' };
+
+    const [values]: any = await pool.query('SELECT * FROM attribute_values WHERE attribute_id = ? ORDER BY id ASC', [id]);
+    
+    return { 
+      success: true, 
+      data: {
+        ...attribute[0],
+        values
+      }
+    };
+  } catch (error) {
+    console.error('Error fetching attribute:', error);
+    return { success: false, error: 'Internal server error' };
+  }
+}
+
+export async function createAttributeValue(data: { attribute_id: number, value: string }) {
+  try {
+    const { attribute_id, value } = data;
+    if (!value || !attribute_id) return { success: false, error: 'Attribute ID and value are required' };
+
+    const [result]: any = await pool.query('INSERT INTO attribute_values (attribute_id, value) VALUES (?, ?)', [attribute_id, value]);
+    return { success: true, id: result.insertId, message: 'Attribute value created successfully' };
+  } catch (error) {
+    console.error('Error creating attribute value:', error);
+    return { success: false, error: 'Internal server error' };
+  }
+}
+
+export async function updateAttributeValue(id: number, data: { value: string }) {
+  try {
+    const { value } = data;
+    if (!value) return { success: false, error: 'Value is required' };
+
+    await pool.query('UPDATE attribute_values SET value = ? WHERE id = ?', [value, id]);
+    return { success: true, message: 'Attribute value updated successfully' };
+  } catch (error) {
+    console.error('Error updating attribute value:', error);
+    return { success: false, error: 'Internal server error' };
+  }
+}
+
+export async function deleteAttributeValue(id: number) {
+  try {
+    await pool.query('DELETE FROM attribute_values WHERE id = ?', [id]);
+    return { success: true, message: 'Attribute value deleted successfully' };
+  } catch (error) {
+    console.error('Error deleting attribute value:', error);
+    return { success: false, error: 'Internal server error' };
+  }
+}

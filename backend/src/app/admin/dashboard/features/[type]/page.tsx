@@ -155,7 +155,7 @@ export default function FeaturesPage({ params }: { params: Promise<{ type: strin
                     {showImage && (
                       <td>
                         {item.image ? (
-                          <img src={`http://localhost:5000${item.image}`} alt={item.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
+                          <img src={item.image} alt={item.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
                         ) : (
                           <span style={{color: '#9ca3af', fontSize: '12px'}}>No image</span>
                         )}

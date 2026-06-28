@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import styles from './dashboard.module.css';
+import { getDashboardData } from '@/actions/dashboardActions';
 
 interface Order {
   id: string;
@@ -38,10 +39,10 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Fetching from the Express backend
-        const res = await fetch('http://localhost:5000/api/dashboard');
-        const json = await res.json();
-        setData(json);
+        const res = await getDashboardData();
+        if (res.success) {
+          setData(res.data as DashboardData);
+        }
       } catch (error) {
         console.error('Failed to fetch dashboard data:', error);
       } finally {

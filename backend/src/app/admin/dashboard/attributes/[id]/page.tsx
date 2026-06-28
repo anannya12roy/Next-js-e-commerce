@@ -4,6 +4,7 @@ import React, { useState, useEffect, use } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import styles from '../attributes.module.css';
+import { getAttribute, createAttributeValue, updateAttributeValue, deleteAttributeValue } from '@/actions/attributeActions';
 
 interface AttributeValue {
   id: number;
@@ -20,7 +21,7 @@ interface Attribute {
 
 export default function AttributeDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
-  const attributeId = resolvedParams.id;
+  const attributeId = parseInt(resolvedParams.id);
   const router = useRouter();
 
   const [attribute, setAttribute] = useState<Attribute | null>(null);
@@ -32,12 +33,11 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
 
-  const fetchAttribute = async () => {
+  const fetchAttributeAndValues = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/attributes/${attributeId}`);
-      if (res.ok) {
-        const data = await res.json();
-        setAttribute(data);
+      const res = await getAttribute(attributeId);
+      if (res.success) {
+        setAttribute(res.data as any);
       } else {
         toast.error('Attribute not found');
         router.push('/admin/dashboard/attributes');
@@ -51,7 +51,7 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
   };
 
   useEffect(() => {
-    fetchAttribute();
+    fetchAttributeAndValues();
   }, [attributeId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -69,24 +69,16 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
         sort_order: parseInt(sortOrder) || 0
       };
 
-      const method = editingId ? 'PUT' : 'POST';
-      const url = editingId 
-        ? `http://localhost:5000/api/attribute-values/${editingId}`
-        : 'http://localhost:5000/api/attribute-values';
+      const res = editingId 
+        ? await updateAttributeValue(editingId, payload)
+        : await createAttributeValue(payload);
 
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (res.ok) {
+      if (res.success) {
         toast.success(editingId ? 'Value updated successfully!' : 'Value added successfully!');
         resetForm();
-        fetchAttribute();
+        fetchAttributeAndValues();
       } else {
-        const errorData = await res.json();
-        toast.error(`Error: ${errorData.error || 'Something went wrong'}`);
+        toast.error(`Error: ${res.error || 'Something went wrong'}`);
       }
     } catch (error: any) {
       console.error('Save failed:', error);
@@ -111,12 +103,12 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
   const handleDelete = async (id: number) => {
     if (confirm('Are you sure you want to delete this value?')) {
       try {
-        const res = await fetch(`http://localhost:5000/api/attribute-values/${id}`, { method: 'DELETE' });
-        if (res.ok) {
+        const res = await deleteAttributeValue(id);
+        if (res.success) {
           toast.success('Value deleted successfully');
-          fetchAttribute();
+          fetchAttributeAndValues();
         } else {
-          toast.error('Failed to delete value');
+          toast.error(res.error || 'Failed to delete value');
         }
       } catch (error) {
         console.error('Delete failed:', error);
