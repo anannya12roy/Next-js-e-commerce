@@ -129,6 +129,14 @@ export default function DashboardLayout({
             </Link>
           )}
 
+          {match('Menus') && (
+            <Link href="/admin/dashboard/menus" className={`${styles.navItem} ${pathname?.includes('/admin/dashboard/menus') ? styles.active : ''}`}>
+              <div className={styles.navItemContent}>
+                <ListIcon /> Menus
+              </div>
+            </Link>
+          )}
+
           {/* Products Accordion */}
           {(match('Products') || filteredProducts.length > 0) && (
             <div className={styles.navItemWrapper}>
