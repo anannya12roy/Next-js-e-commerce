@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import '../admin-global.css';
+import { MediaModalProvider } from '@/contexts/MediaModalContext';
 
 export default function DashboardLayout({
   children,
@@ -88,120 +89,122 @@ export default function DashboardLayout({
   );
 
   return (
-    <div className="layoutContainer">
-      <aside className="sidebar">
-        <div className="logoContainer">
-          <span className="logoText">NEXORA</span>
-        </div>
-        
-        <div className="searchContainer">
-          <input 
-            type="text" 
-            placeholder="Search in menu" 
-            className="searchInput" 
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-
-        <nav className="nav">
-          {match('Home') && (
-            <Link href="/" className="navItem">
-              <div className="navItemContent">
-                <HomeIcon /> Home
-              </div>
-            </Link>
-          )}
+    <MediaModalProvider>
+      <div className="layoutContainer">
+        <aside className="sidebar">
+          <div className="logoContainer">
+            <span className="logoText">NEXORA</span>
+          </div>
           
-          {match('Dashboard') && (
-            <Link href="/admin/dashboard" className={`navItem ${pathname === '/admin/dashboard' ? 'active' : ''}`}>
-              <div className="navItemContent">
-                <DashboardIcon /> Dashboard
-              </div>
-            </Link>
-          )}
+          <div className="searchContainer">
+            <input 
+              type="text" 
+              placeholder="Search in menu" 
+              className="searchInput" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
 
-          {match('Media') && (
-            <Link href="/admin/dashboard/media" className={`navItem ${pathname?.includes('/media') ? 'active' : ''}`}>
-              <div className="navItemContent">
-                <MediaIcon /> Media
-              </div>
-            </Link>
-          )}
-
-          {match('Menus') && (
-            <Link href="/admin/dashboard/menus" className={`navItem ${pathname?.includes('/admin/dashboard/menus') ? 'active' : ''}`}>
-              <div className="navItemContent">
-                <ListIcon /> Menus
-              </div>
-            </Link>
-          )}
-
-          {/* Products Accordion */}
-          {(match('Products') || filteredProducts.length > 0) && (
-            <div className="navItemWrapper">
-              <div 
-                className={`navItem ${pathname?.includes('/products') || productsOpen || searchTerm ? 'active' : ''}`}
-                onClick={() => setProductsOpen(!productsOpen)}
-              >
+          <nav className="nav">
+            {match('Home') && (
+              <Link href="/" className="navItem">
                 <div className="navItemContent">
-                  <ListIcon /> Products
+                  <HomeIcon /> Home
                 </div>
-                <ChevronIcon expanded={productsOpen || !!searchTerm} />
-              </div>
-              
-              {(productsOpen || searchTerm) && (
-                <div className="submenu">
-                  {filteredProducts.map((item, index) => (
-                    <Link key={index} href={item.href} className={`subNavItem ${pathname === item.href ? 'activeSub' : ''}`}>
-                      {item.bullet === 'solid' ? (
-                        <span className="bullet"></span>
-                      ) : (
-                        <span style={{ fontSize: '10px', marginRight: '8px', opacity: 0.5 }}>○</span>
-                      )}
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Attributes Accordion */}
-          {(match('Attributes') || filteredAttributes.length > 0) && (
-            <div className="navItemWrapper">
-              <div 
-                className={`navItem ${pathname?.includes('/admin/dashboard/attributes') || attributesOpen || searchTerm ? 'active' : ''}`}
-                onClick={() => setAttributesOpen(!attributesOpen)}
-              >
+              </Link>
+            )}
+            
+            {match('Dashboard') && (
+              <Link href="/admin/dashboard" className={`navItem ${pathname === '/admin/dashboard' ? 'active' : ''}`}>
                 <div className="navItemContent">
-                  <AttributesIcon /> Attributes
+                  <DashboardIcon /> Dashboard
                 </div>
-                <ChevronIcon expanded={attributesOpen || !!searchTerm} />
-              </div>
-              
-              {(attributesOpen || searchTerm) && (
-                <div className="submenu">
-                  {filteredAttributes.map((item, index) => (
-                    <Link key={index} href={item.href} className={`subNavItem ${pathname === item.href ? 'activeSub' : ''}`}>
-                      {item.bullet === 'solid' ? (
-                        <span className="bullet"></span>
-                      ) : (
-                        <span style={{ fontSize: '10px', marginRight: '8px', opacity: 0.5 }}>○</span>
-                      )}
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+              </Link>
+            )}
 
-        </nav>
-      </aside>
-      <main className="mainContent">
-        {children}
-      </main>
-    </div>
+            {match('Media') && (
+              <Link href="/admin/dashboard/media" className={`navItem ${pathname?.includes('/media') ? 'active' : ''}`}>
+                <div className="navItemContent">
+                  <MediaIcon /> Media
+                </div>
+              </Link>
+            )}
+
+            {match('Menus') && (
+              <Link href="/admin/dashboard/menus" className={`navItem ${pathname?.includes('/admin/dashboard/menus') ? 'active' : ''}`}>
+                <div className="navItemContent">
+                  <ListIcon /> Menus
+                </div>
+              </Link>
+            )}
+
+            {/* Products Accordion */}
+            {(match('Products') || filteredProducts.length > 0) && (
+              <div className="navItemWrapper">
+                <div 
+                  className={`navItem ${pathname?.includes('/products') || productsOpen || searchTerm ? 'active' : ''}`}
+                  onClick={() => setProductsOpen(!productsOpen)}
+                >
+                  <div className="navItemContent">
+                    <ListIcon /> Products
+                  </div>
+                  <ChevronIcon expanded={productsOpen || !!searchTerm} />
+                </div>
+                
+                {(productsOpen || searchTerm) && (
+                  <div className="submenu">
+                    {filteredProducts.map((item, index) => (
+                      <Link key={index} href={item.href} className={`subNavItem ${pathname === item.href ? 'activeSub' : ''}`}>
+                        {item.bullet === 'solid' ? (
+                          <span className="bullet"></span>
+                        ) : (
+                          <span style={{ fontSize: '10px', marginRight: '8px', opacity: 0.5 }}>○</span>
+                        )}
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Attributes Accordion */}
+            {(match('Attributes') || filteredAttributes.length > 0) && (
+              <div className="navItemWrapper">
+                <div 
+                  className={`navItem ${pathname?.includes('/admin/dashboard/attributes') || attributesOpen || searchTerm ? 'active' : ''}`}
+                  onClick={() => setAttributesOpen(!attributesOpen)}
+                >
+                  <div className="navItemContent">
+                    <AttributesIcon /> Attributes
+                  </div>
+                  <ChevronIcon expanded={attributesOpen || !!searchTerm} />
+                </div>
+                
+                {(attributesOpen || searchTerm) && (
+                  <div className="submenu">
+                    {filteredAttributes.map((item, index) => (
+                      <Link key={index} href={item.href} className={`subNavItem ${pathname === item.href ? 'activeSub' : ''}`}>
+                        {item.bullet === 'solid' ? (
+                          <span className="bullet"></span>
+                        ) : (
+                          <span style={{ fontSize: '10px', marginRight: '8px', opacity: 0.5 }}>○</span>
+                        )}
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+          </nav>
+        </aside>
+        <main className="mainContent">
+          {children}
+        </main>
+      </div>
+    </MediaModalProvider>
   );
 }

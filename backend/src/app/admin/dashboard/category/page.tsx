@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { getCategories, createCategory, updateCategory, deleteCategory } from '@/actions/categoryActions';
 import { getBrands } from '@/actions/brandActions';
+import { useMediaModal } from '@/contexts/MediaModalContext';
 
 interface Category {
   id: number;
@@ -19,6 +20,7 @@ interface Category {
 }
 
 export default function CategoryPage() {
+  const { openMediaModal } = useMediaModal();
   const [categories, setCategories] = useState<Category[]>([]);
   const [brands, setBrands] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -202,7 +204,15 @@ export default function CategoryPage() {
                 <div className="formLabel">Banner</div>
                 <div className="inputWrapper">
                   <div className="fileInputWrapper">
-                    <div className="fileInputBtn">Browse</div>
+                    <div className="fileInputBtn" onClick={() => {
+                      openMediaModal({
+                        onSelect: (files) => {
+                          if (files.length > 0) {
+                            setFormData(prev => ({ ...prev, banner: files[0].url }));
+                          }
+                        }
+                      });
+                    }}>Browse</div>
                     <input type="text" name="banner" className="fileInputText" placeholder="Choose File (URL for now)" value={formData.banner} onChange={handleInputChange} />
                   </div>
                   <span className="helpText">This image is visible in category page.</span>
@@ -213,7 +223,15 @@ export default function CategoryPage() {
                 <div className="formLabel">Category Image</div>
                 <div className="inputWrapper">
                   <div className="fileInputWrapper">
-                    <div className="fileInputBtn">Browse</div>
+                    <div className="fileInputBtn" onClick={() => {
+                      openMediaModal({
+                        onSelect: (files) => {
+                          if (files.length > 0) {
+                            setFormData(prev => ({ ...prev, category_image: files[0].url }));
+                          }
+                        }
+                      });
+                    }}>Browse</div>
                     <input type="text" name="category_image" className="fileInputText" placeholder="Choose File (URL for now)" value={formData.category_image} onChange={handleInputChange} />
                   </div>
                 </div>

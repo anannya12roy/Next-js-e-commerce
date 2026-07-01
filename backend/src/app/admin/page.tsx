@@ -37,7 +37,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container">
+    <div className="loginContainer">
       <div className="blob"></div>
       <div className="blob2"></div>
       <div className="glassPanel">

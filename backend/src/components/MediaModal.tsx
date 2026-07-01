@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { uploadMedia } from '@/actions/mediaActions';
-import styles from './MediaModal.module.css';
-
 interface MediaFile {
   id: number;
   original_name: string;
@@ -116,38 +114,38 @@ export default function MediaModal({ isOpen, onClose, onAddFiles, initialSelecte
   });
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <div className="overlay">
+      <div className="modal">
         {/* Header Tabs */}
-        <div className={styles.header}>
-          <div className={styles.tabs}>
+        <div className="header">
+          <div className="tabs">
             <button 
-              className={`${styles.tab} ${activeTab === 'select' ? styles.activeTab : ''}`}
+              className={`tab ${activeTab === 'select' ? 'activeTab' : ''}`}
               onClick={() => setActiveTab('select')}
             >
               Select File
             </button>
             <button 
-              className={`${styles.tab} ${activeTab === 'upload' ? styles.activeTab : ''}`}
+              className={`tab ${activeTab === 'upload' ? 'activeTab' : ''}`}
               onClick={() => setActiveTab('upload')}
             >
               Upload New
             </button>
           </div>
-          <button className={styles.closeBtn} onClick={onClose}>&times;</button>
+          <button className="closeBtn" onClick={onClose}>&times;</button>
         </div>
 
         {/* Breadcrumb */}
-        <div className={styles.breadcrumb}>
+        <div className="breadcrumb">
           Root
         </div>
 
         {activeTab === 'select' ? (
           <>
             {/* Toolbar */}
-            <div className={styles.toolbar}>
+            <div className="toolbar">
               <select 
-                className={styles.sortSelect}
+                className="sortSelect"
                 value={sortOption}
                 onChange={(e) => setSortOption(e.target.value)}
               >
@@ -155,7 +153,7 @@ export default function MediaModal({ isOpen, onClose, onAddFiles, initialSelecte
                 <option value="oldest">Sort by oldest</option>
               </select>
               
-              <label className={styles.selectedOnly}>
+              <label className="selectedOnly">
                 <input 
                   type="checkbox" 
                   checked={selectedOnly}
@@ -167,32 +165,32 @@ export default function MediaModal({ isOpen, onClose, onAddFiles, initialSelecte
               <input 
                 type="text" 
                 placeholder="Search your files" 
-                className={styles.searchInput}
+                className="searchInput"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
 
-              <button className={styles.newFolderBtn}>+ New Folder</button>
+              <button className="newFolderBtn">+ New Folder</button>
             </div>
 
             {/* Grid Body */}
-            <div className={styles.body}>
-              <div className={styles.grid}>
+            <div className="body">
+              <div className="grid">
                 {displayedFiles.map(file => {
                   const isSelected = selectedImages.some(img => img.id === file.id);
                   return (
                     <div 
                       key={file.id} 
-                      className={`${styles.card} ${isSelected ? styles.cardSelected : ''}`}
+                      className={`card ${isSelected ? 'cardSelected' : ''}`}
                       onClick={() => toggleSelection(file)}
                       title={file.original_name}
                     >
-                      <div className={styles.imageWrapper}>
-                        <img src={file.url} alt={file.original_name} className={styles.image} />
+                      <div className="imageWrapper">
+                        <img src={file.url} alt={file.original_name} className="image" />
                       </div>
-                      <div className={styles.cardInfo}>
-                        <div className={styles.filename}>{file.original_name}</div>
-                        <div className={styles.filesize}>{formatSize(file.size)}</div>
+                      <div className="cardInfo">
+                        <div className="filename">{file.original_name}</div>
+                        <div className="filesize">{formatSize(file.size)}</div>
                       </div>
                     </div>
                   );
@@ -206,27 +204,27 @@ export default function MediaModal({ isOpen, onClose, onAddFiles, initialSelecte
             </div>
 
             {/* Footer */}
-            <div className={styles.footer}>
-              <div className={styles.footerLeft}>
-                <div className={styles.selectedCount}>{selectedImages.length} File selected</div>
-                <button className={styles.clearBtn} onClick={handleClear}>Clear</button>
+            <div className="footer">
+              <div className="footerLeft">
+                <div className="selectedCount">{selectedImages.length} File selected</div>
+                <button className="clearBtn" onClick={handleClear}>Clear</button>
               </div>
               
-              <div className={styles.pagination}>
-                <button className={`${styles.pageBtn} ${styles.pageBtnPrev}`}>Prev</button>
-                <button className={`${styles.pageBtn} ${styles.pageBtnNext}`}>Next</button>
+              <div className="pagination">
+                <button className={`pageBtn pageBtnPrev`}>Prev</button>
+                <button className={`pageBtn pageBtnNext`}>Next</button>
               </div>
 
-              <button className={styles.addFilesBtn} onClick={() => onAddFiles(selectedImages)}>
+              <button className="addFilesBtn" onClick={() => onAddFiles(selectedImages)}>
                 Add Files
               </button>
             </div>
           </>
         ) : (
           /* Upload Tab Content */
-          <div className={styles.uploadContainer}>
-            <div className={styles.uploadIcon}>📁</div>
-            <div className={styles.uploadText}>
+          <div className="uploadContainer">
+            <div className="uploadIcon">📁</div>
+            <div className="uploadText">
               {isUploading ? 'Uploading...' : 'Click browse to upload a new file'}
             </div>
             <input 
@@ -237,7 +235,7 @@ export default function MediaModal({ isOpen, onClose, onAddFiles, initialSelecte
               accept="image/*"
             />
             <button 
-              className={styles.browseBtn} 
+              className="browseBtn" 
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploading}
             >

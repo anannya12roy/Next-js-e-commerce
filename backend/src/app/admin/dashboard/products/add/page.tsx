@@ -10,7 +10,7 @@ import { getCategories } from '@/actions/categoryActions';
 import { getBrands } from '@/actions/brandActions';
 import { getAttributes } from '@/actions/attributeActions';
 import { getFeatures } from '@/actions/featureActions';
-import MediaModal from '@/components/MediaModal';
+import { useMediaModal } from '@/contexts/MediaModalContext';
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 const quillModules = {
@@ -268,6 +268,7 @@ const Switch = ({ label, checked }: { label: string, checked?: boolean }) => (
 
 export default function AddProductPage() {
   const router = useRouter();
+  const { openMediaModal } = useMediaModal();
   const [expanded, setExpanded] = useState({
     info: true,
     sizeChart: false,
@@ -301,7 +302,6 @@ export default function AddProductPage() {
   const [sellingPriceOverrides, setSellingPriceOverrides] = useState<Record<string, string>>({});
   const [purchasePriceOverrides, setPurchasePriceOverrides] = useState<Record<string, string>>({});
 
-  const [mediaModalTarget, setMediaModalTarget] = useState<'product' | string | null>(null);
   const [variantImages, setVariantImages] = useState<Record<string, any>>({});
   const [selectedImages, setSelectedImages] = useState<any[]>([]);
 
@@ -625,7 +625,12 @@ export default function AddProductPage() {
                 type="button"
                 className="actionButton" 
                 style={{ backgroundColor: '#0ea5e9' }}
-                onClick={() => setMediaModalTarget('product')}
+                onClick={() => {
+                  openMediaModal({
+                    initialSelected: selectedImages,
+                    onSelect: (files) => setSelectedImages(files)
+                  });
+                }}
               >
                 Browse Media
               </button>
@@ -751,7 +756,16 @@ export default function AddProductPage() {
                               }} style={{ position: 'absolute', top: -5, right: -5, background: 'red', color: 'white', borderRadius: '50%', width: '16px', height: '16px', fontSize: '10px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>&times;</button>
                             </div>
                           ) : (
-                            <button type="button" onClick={() => setMediaModalTarget(variantName)} style={{ padding: '6px 12px', fontSize: '12px', background: '#e5e7eb', border: 'none', borderRadius: '4px', cursor: 'pointer', color: '#374151' }}>Pick</button>
+                            <button type="button" onClick={() => {
+                              openMediaModal({
+                                initialSelected: variantImages[variantName] ? [variantImages[variantName]] : [],
+                                onSelect: (files) => {
+                                  if (files.length > 0) {
+                                    setVariantImages(prev => ({ ...prev, [variantName]: files[0] }));
+                                  }
+                                }
+                              });
+                            }} style={{ padding: '6px 12px', fontSize: '12px', background: '#e5e7eb', border: 'none', borderRadius: '4px', cursor: 'pointer', color: '#374151' }}>Pick</button>
                           )}
                         </td>
                       </tr>
@@ -881,22 +895,6 @@ export default function AddProductPage() {
       </div>
 
     </div>
-    
-      <MediaModal 
-        isOpen={mediaModalTarget !== null}
-        onClose={() => setMediaModalTarget(null)}
-        onAddFiles={(files) => {
-          if (files.length > 0) {
-            if (mediaModalTarget === 'product') {
-              setSelectedImages(files);
-            } else if (mediaModalTarget) {
-              setVariantImages(prev => ({ ...prev, [mediaModalTarget]: files[0] }));
-            }
-          }
-          setMediaModalTarget(null);
-        }}
-        initialSelected={mediaModalTarget === 'product' ? selectedImages : (mediaModalTarget && variantImages[mediaModalTarget] ? [variantImages[mediaModalTarget]] : [])}
-      />
     </AccordionContext.Provider>
   );
 }
