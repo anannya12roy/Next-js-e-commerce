@@ -61,17 +61,25 @@ export default function MediaModal({ isOpen, onClose, onAddFiles, initialSelecte
   };
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+    const files = e.target.files;
+    if (files && files.length > 0) {
       setIsUploading(true);
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await uploadMedia(formData);
-      if (res.success) {
-        fetchMedia(); // Refresh media list
+      let allSuccess = true;
+      
+      for (let i = 0; i < files.length; i++) {
+        const formData = new FormData();
+        formData.append('file', files[i]);
+        const res = await uploadMedia(formData);
+        if (!res.success) {
+          alert(`Failed to upload ${files[i].name}: ${res.error}`);
+          allSuccess = false;
+        }
+      }
+      
+      fetchMedia(); // Refresh media list
+      
+      if (allSuccess) {
         setActiveTab('select'); // Go back to select tab
-      } else {
-        alert(res.error || 'Failed to upload');
       }
       setIsUploading(false);
     }
@@ -233,6 +241,7 @@ export default function MediaModal({ isOpen, onClose, onAddFiles, initialSelecte
               style={{ display: 'none' }}
               onChange={handleUpload}
               accept="image/*"
+              multiple
             />
             <button 
               className="browseBtn" 

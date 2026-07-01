@@ -72,30 +72,42 @@ export default function MediaPage() {
     fileInputRef.current?.click();
   };
 
-  const uploadFile = async (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await uploadMedia(formData);
-
-      if (res.success) {
-        fetchFiles();
-        setIsUploadView(false); // Go back to list after successful upload
-        showToast('File uploaded successfully!');
-      } else {
-        showToast(res.error || 'Failed to upload file', true);
+  const uploadMultipleFiles = async (files: FileList | File[]) => {
+    let allSuccess = true;
+    let uploadedCount = 0;
+    
+    for (let i = 0; i < files.length; i++) {
+      const formData = new FormData();
+      formData.append('file', files[i]);
+      try {
+        const res = await uploadMedia(formData);
+        if (!res.success) {
+          allSuccess = false;
+          showToast(`Failed to upload ${files[i].name}`, true);
+        } else {
+          uploadedCount++;
+        }
+      } catch (error) {
+        console.error('Upload error:', error);
+        allSuccess = false;
+        showToast(`Error uploading ${files[i].name}`, true);
       }
-    } catch (error) {
-      console.error('Upload error:', error);
-      showToast('Error uploading file', true);
     }
-  }
+    
+    fetchFiles();
+    
+    if (allSuccess && uploadedCount > 0) {
+      setIsUploadView(false);
+      showToast(`${uploadedCount} file(s) uploaded successfully!`);
+    } else if (uploadedCount > 0) {
+      setIsUploadView(false);
+      showToast(`Uploaded ${uploadedCount} file(s), some failed.`);
+    }
+  };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      await uploadFile(selectedFile);
+    if (e.target.files && e.target.files.length > 0) {
+      await uploadMultipleFiles(e.target.files);
     }
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -118,8 +130,7 @@ export default function MediaPage() {
     setIsDragging(false);
     
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const droppedFile = e.dataTransfer.files[0];
-      await uploadFile(droppedFile);
+      await uploadMultipleFiles(e.dataTransfer.files);
       e.dataTransfer.clearData();
     }
   };
@@ -209,6 +220,7 @@ export default function MediaPage() {
             className="hiddenFileInput" 
             onChange={handleFileChange}
             accept="image/*" 
+            multiple
           />
         </div>
         
