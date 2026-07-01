@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { getBrands, createBrand, updateBrand, deleteBrand } from '@/actions/brandActions';
+import { useMediaModal } from '@/contexts/MediaModalContext';
 
 interface Brand {
   id: number;
@@ -14,6 +15,7 @@ interface Brand {
 }
 
 export default function BrandPage() {
+  const { openMediaModal } = useMediaModal();
   const [brands, setBrands] = useState<Brand[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -129,7 +131,15 @@ export default function BrandPage() {
                 <div className="formLabel">Logo</div>
                 <div className="inputWrapper">
                   <div className="fileInputWrapper">
-                    <div className="fileInputBtn">Browse</div>
+                    <div className="fileInputBtn" onClick={() => {
+                      openMediaModal({
+                        onSelect: (files) => {
+                          if (files.length > 0) {
+                            setFormData(prev => ({ ...prev, logo: files[0].url }));
+                          }
+                        }
+                      });
+                    }}>Browse</div>
                     <input type="text" name="logo" className="fileInputText" placeholder="Choose File (URL for now)" value={formData.logo} onChange={handleInputChange} />
                   </div>
                   <span className="helpText">Upload the brand logo here.</span>
