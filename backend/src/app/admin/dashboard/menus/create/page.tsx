@@ -3,7 +3,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
-import styles from '../menus.module.css';
 import { getMenu, createMenu, updateMenu } from '@/actions/menuActions';
 
 function CreateMenuForm() {
@@ -75,25 +74,25 @@ function CreateMenuForm() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>{editId ? 'Edit Menu' : 'Create Menu'}</h1>
+    <div className="container">
+      <div className="header">
+        <h1 className="title">{editId ? 'Edit Menu' : 'Create Menu'}</h1>
         <button 
           onClick={() => router.push('/admin/dashboard/menus')} 
-          className={styles.addBtn}
+          className="addBtn"
           style={{ backgroundColor: '#f9fafb', color: '#374151', border: '1px solid #d1d5db' }}
         >
           Back to List
         </button>
       </div>
 
-      <div className={styles.formContainer}>
+      <div className="formContainer">
         <form onSubmit={handleSubmit}>
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Name</label>
+          <div className="formGroup">
+            <label className="label">Name</label>
             <input 
               type="text" 
-              className={styles.input} 
+              className="input" 
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Mega Menu"
@@ -101,10 +100,10 @@ function CreateMenuForm() {
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Menu Identifier</label>
+          <div className="formGroup">
+            <label className="label">Menu Identifier</label>
             <select 
-              className={styles.input} 
+              className="input" 
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
             >
@@ -115,7 +114,7 @@ function CreateMenuForm() {
             </select>
           </div>
 
-          <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+          <button type="submit" className="submitBtn" disabled={isSubmitting}>
             {isSubmitting ? 'Saving...' : (editId ? 'Update' : 'Create')}
           </button>
         </form>

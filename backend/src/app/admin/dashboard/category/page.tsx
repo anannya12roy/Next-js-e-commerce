@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import styles from './category.module.css';
 import { getCategories, createCategory, updateCategory, deleteCategory } from '@/actions/categoryActions';
 import { getBrands } from '@/actions/brandActions';
 
@@ -140,27 +139,27 @@ export default function CategoryPage() {
 
   if (isFormView) {
     return (
-      <div className={styles.container}>
-        <div className={styles.formCard}>
-          <div className={styles.formCardHeader}>
-            <h2 className={styles.formCardTitle}>Category Information</h2>
-            <button className={styles.backBtn} onClick={closeForm}>Back to List</button>
+      <div className="container">
+        <div className="formCard">
+          <div className="formCardHeader">
+            <h2 className="formCardTitle">Category Information</h2>
+            <button className="backBtn" onClick={closeForm}>Back to List</button>
           </div>
           
           <form onSubmit={handleSubmit}>
-            <div className={styles.formBody}>
+            <div className="formBody">
               
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Name</div>
-                <div className={styles.inputWrapper}>
-                  <input type="text" name="name" className={styles.inputField} placeholder="Name" value={formData.name} onChange={handleInputChange} required />
+              <div className="formRow">
+                <div className="formLabel">Name</div>
+                <div className="inputWrapper">
+                  <input type="text" name="name" className="inputField" placeholder="Name" value={formData.name} onChange={handleInputChange} required />
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Parent Category</div>
-                <div className={styles.inputWrapper}>
-                  <select name="parent_category" className={styles.inputField} value={formData.parent_category} onChange={handleInputChange}>
+              <div className="formRow">
+                <div className="formLabel">Parent Category</div>
+                <div className="inputWrapper">
+                  <select name="parent_category" className="inputField" value={formData.parent_category} onChange={handleInputChange}>
                     <option value="">No Parent</option>
                     {categories.filter(c => c.id !== editingId).map(c => (
                       <option key={c.id} value={c.id}>{c.name}</option>
@@ -169,10 +168,10 @@ export default function CategoryPage() {
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Brand</div>
-                <div className={styles.inputWrapper}>
-                  <select name="brand" className={styles.inputField} value={formData.brand} onChange={handleInputChange}>
+              <div className="formRow">
+                <div className="formLabel">Brand</div>
+                <div className="inputWrapper">
+                  <select name="brand" className="inputField" value={formData.brand} onChange={handleInputChange}>
                     <option value="">Nothing selected</option>
                     {brands.map(b => (
                       <option key={b.id} value={b.name}>{b.name}</option>
@@ -181,81 +180,81 @@ export default function CategoryPage() {
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Ordering Number</div>
-                <div className={styles.inputWrapper}>
-                  <input type="number" name="ordering_number" className={styles.inputField} placeholder="Order Level" value={formData.ordering_number} onChange={handleInputChange} />
-                  <span className={styles.helpText}>Higher number has low priority</span>
+              <div className="formRow">
+                <div className="formLabel">Ordering Number</div>
+                <div className="inputWrapper">
+                  <input type="number" name="ordering_number" className="inputField" placeholder="Order Level" value={formData.ordering_number} onChange={handleInputChange} />
+                  <span className="helpText">Higher number has low priority</span>
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Type</div>
-                <div className={styles.inputWrapper}>
-                  <select className={styles.inputField}>
+              <div className="formRow">
+                <div className="formLabel">Type</div>
+                <div className="inputWrapper">
+                  <select className="inputField">
                     <option>Physical</option>
                     <option>Digital</option>
                   </select>
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Banner</div>
-                <div className={styles.inputWrapper}>
-                  <div className={styles.fileInputWrapper}>
-                    <div className={styles.fileInputBtn}>Browse</div>
-                    <input type="text" name="banner" className={styles.fileInputText} placeholder="Choose File (URL for now)" value={formData.banner} onChange={handleInputChange} />
+              <div className="formRow">
+                <div className="formLabel">Banner</div>
+                <div className="inputWrapper">
+                  <div className="fileInputWrapper">
+                    <div className="fileInputBtn">Browse</div>
+                    <input type="text" name="banner" className="fileInputText" placeholder="Choose File (URL for now)" value={formData.banner} onChange={handleInputChange} />
                   </div>
-                  <span className={styles.helpText}>This image is visible in category page.</span>
+                  <span className="helpText">This image is visible in category page.</span>
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Category Image</div>
-                <div className={styles.inputWrapper}>
-                  <div className={styles.fileInputWrapper}>
-                    <div className={styles.fileInputBtn}>Browse</div>
-                    <input type="text" name="category_image" className={styles.fileInputText} placeholder="Choose File (URL for now)" value={formData.category_image} onChange={handleInputChange} />
+              <div className="formRow">
+                <div className="formLabel">Category Image</div>
+                <div className="inputWrapper">
+                  <div className="fileInputWrapper">
+                    <div className="fileInputBtn">Browse</div>
+                    <input type="text" name="category_image" className="fileInputText" placeholder="Choose File (URL for now)" value={formData.category_image} onChange={handleInputChange} />
                   </div>
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Slug</div>
-                <div className={styles.inputWrapper}>
-                  <input type="text" name="slug" className={styles.inputField} placeholder="Slug" value={formData.slug} onChange={handleInputChange} required />
+              <div className="formRow">
+                <div className="formLabel">Slug</div>
+                <div className="inputWrapper">
+                  <input type="text" name="slug" className="inputField" placeholder="Slug" value={formData.slug} onChange={handleInputChange} required />
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Status</div>
-                <div className={styles.inputWrapper}>
-                  <select name="status" className={styles.inputField} value={formData.status} onChange={handleInputChange}>
+              <div className="formRow">
+                <div className="formLabel">Status</div>
+                <div className="inputWrapper">
+                  <select name="status" className="inputField" value={formData.status} onChange={handleInputChange}>
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                   </select>
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Meta Title</div>
-                <div className={styles.inputWrapper}>
-                  <input type="text" name="meta_title" className={styles.inputField} placeholder="Meta Title" value={formData.meta_title} onChange={handleInputChange} />
+              <div className="formRow">
+                <div className="formLabel">Meta Title</div>
+                <div className="inputWrapper">
+                  <input type="text" name="meta_title" className="inputField" placeholder="Meta Title" value={formData.meta_title} onChange={handleInputChange} />
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Meta Description</div>
-                <div className={styles.inputWrapper}>
-                  <textarea name="meta_description" className={styles.inputField} placeholder="Meta Description" value={formData.meta_description} onChange={handleInputChange} rows={3} />
+              <div className="formRow">
+                <div className="formLabel">Meta Description</div>
+                <div className="inputWrapper">
+                  <textarea name="meta_description" className="inputField" placeholder="Meta Description" value={formData.meta_description} onChange={handleInputChange} rows={3} />
                 </div>
               </div>
 
             </div>
             
-            <div className={styles.formFooter}>
-              <button type="button" className={styles.backBtn} onClick={closeForm}>Cancel</button>
-              <button type="submit" className={styles.submitBtnCard}>
+            <div className="formFooter">
+              <button type="button" className="backBtn" onClick={closeForm}>Cancel</button>
+              <button type="submit" className="submitBtnCard">
                 {editingId ? 'Update Category' : 'Save'}
               </button>
             </div>
@@ -266,17 +265,17 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Categories</h1>
-        <button className={styles.addBtn} onClick={() => openForm()}>+ Add New Category</button>
+    <div className="container">
+      <header className="header">
+        <h1 className="title">Categories</h1>
+        <button className="addBtn" onClick={() => openForm()}>+ Add New Category</button>
       </header>
 
-      <div className={styles.tableContainer}>
+      <div className="tableContainer">
         {loading ? (
           <p style={{ padding: '2rem' }}>Loading categories...</p>
         ) : (
-          <table className={styles.table}>
+          <table className="table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -303,14 +302,14 @@ export default function CategoryPage() {
                   <td>{cat.slug}</td>
                   <td>{cat.ordering_number}</td>
                   <td>
-                    <span className={`${styles.status} ${cat.status === 'active' ? styles.statusActive : styles.statusInactive}`}>
+                    <span className={`status ${cat.status === 'active' ? 'statusActive' : 'statusInactive'}`}>
                       {cat.status}
                     </span>
                   </td>
                   <td>
-                    <div className={styles.actions}>
-                      <button className={styles.editBtn} onClick={() => openForm(cat)}>Edit</button>
-                      <button className={styles.deleteBtn} onClick={() => handleDelete(cat.id)}>Delete</button>
+                    <div className="actions">
+                      <button className="editBtn" onClick={() => openForm(cat)}>Edit</button>
+                      <button className="deleteBtn" onClick={() => handleDelete(cat.id)}>Delete</button>
                     </div>
                   </td>
                 </tr>

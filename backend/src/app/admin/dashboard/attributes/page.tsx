@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import styles from './attributes.module.css';
 import { getAttributes, createAttribute, updateAttribute, deleteAttribute } from '@/actions/attributeActions';
 
 interface AttributeValue {
@@ -97,18 +96,18 @@ export default function AttributesPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.contentWrapper}>
+    <div className="container">
+      <div className="contentWrapper">
         
         {/* Main Content Area */}
-        <div className={styles.mainCol}>
-          <div className={styles.cardHeader}>
+        <div className="mainCol">
+          <div className="cardHeader">
             Attributes
           </div>
           {loading ? (
             <p style={{ padding: '24px' }}>Loading attributes...</p>
           ) : (
-            <table className={styles.table}>
+            <table className="table">
               <thead>
                 <tr>
                   <th>#</th>
@@ -123,10 +122,10 @@ export default function AttributesPage() {
                     <td>{index + 1}</td>
                     <td>{attr.name}</td>
                     <td>
-                      <div className={styles.valuesContainer}>
+                      <div className="valuesContainer">
                         {attr.values && attr.values.length > 0 ? (
                           attr.values.map(val => (
-                            <span key={val.id} className={styles.valueChip}>{val.value}</span>
+                            <span key={val.id} className="valueChip">{val.value}</span>
                           ))
                         ) : (
                           <span style={{ color: '#9ca3af', fontSize: '12px' }}>No values yet</span>
@@ -136,21 +135,21 @@ export default function AttributesPage() {
                     <td>
                       <div style={{ display: 'flex' }}>
                         <button 
-                          className={`${styles.actionBtn} ${styles.settingsBtn}`} 
+                          className={`actionBtn settingsBtn`} 
                           onClick={() => router.push(`/admin/dashboard/attributes/${attr.id}`)}
                           title="Settings/Details"
                         >
                           ⚙️
                         </button>
                         <button 
-                          className={`${styles.actionBtn} ${styles.editBtn}`} 
+                          className={`actionBtn editBtn`} 
                           onClick={() => handleEdit(attr)}
                           title="Edit"
                         >
                           ✏️
                         </button>
                         <button 
-                          className={`${styles.actionBtn} ${styles.deleteBtn}`} 
+                          className={`actionBtn deleteBtn`} 
                           onClick={() => handleDelete(attr.id)}
                           title="Delete"
                         >
@@ -162,7 +161,7 @@ export default function AttributesPage() {
                 ))}
                 {attributes.length === 0 && (
                   <tr>
-                    <td colSpan={4} className={styles.emptyState}>No attributes found. Create one on the right!</td>
+                    <td colSpan={4} className="emptyState">No attributes found. Create one on the right!</td>
                   </tr>
                 )}
               </tbody>
@@ -171,17 +170,17 @@ export default function AttributesPage() {
         </div>
 
         {/* Sidebar Area */}
-        <div className={styles.sideCol}>
-          <div className={styles.formCard}>
-            <div className={styles.cardHeader}>
+        <div className="sideCol">
+          <div className="formCard">
+            <div className="cardHeader">
               {editingId ? 'Edit Attribute' : 'Add New Attribute'}
             </div>
-            <form onSubmit={handleSubmit} className={styles.formBody}>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Name</label>
+            <form onSubmit={handleSubmit} className="formBody">
+              <div className="formGroup">
+                <label className="label">Name</label>
                 <input 
                   type="text" 
-                  className={styles.input} 
+                  className="input" 
                   placeholder="e.g. Color, Size" 
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -190,11 +189,11 @@ export default function AttributesPage() {
               </div>
               <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                 {editingId && (
-                  <button type="button" className={styles.exportBtn} style={{ backgroundColor: '#9ca3af' }} onClick={resetForm}>
+                  <button type="button" className="exportBtn" style={{ backgroundColor: '#9ca3af' }} onClick={resetForm}>
                     Cancel
                   </button>
                 )}
-                <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                <button type="submit" className="submitBtn" disabled={isSubmitting}>
                   {isSubmitting ? 'Saving...' : 'Save'}
                 </button>
               </div>

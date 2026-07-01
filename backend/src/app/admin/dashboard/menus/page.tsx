@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import styles from './menus.module.css';
 import { getMenus, deleteMenu } from '@/actions/menuActions';
 
 export default function MenusPage() {
@@ -45,19 +44,19 @@ export default function MenusPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Menus</h1>
-        <Link href="/admin/dashboard/menus/create" className={styles.addBtn}>
+    <div className="container">
+      <div className="header">
+        <h1 className="title">Menus</h1>
+        <Link href="/admin/dashboard/menus/create" className="addBtn">
           Create New Menu
         </Link>
       </div>
 
-      <div className={styles.tableContainer}>
+      <div className="tableContainer">
         {loading ? (
           <p style={{ padding: '24px' }}>Loading menus...</p>
         ) : (
-          <table className={styles.table}>
+          <table className="table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -69,14 +68,14 @@ export default function MenusPage() {
                 <tr key={menu.id}>
                   <td>{menu.name}</td>
                   <td>
-                    <div className={styles.actions}>
-                      <Link href={`/admin/dashboard/menus/${menu.id}/items`} className={styles.manageBtn}>
+                    <div className="actions">
+                      <Link href={`/admin/dashboard/menus/${menu.id}/items`} className="manageBtn">
                         Manage Items
                       </Link>
-                      <Link href={`/admin/dashboard/menus/create?id=${menu.id}`} className={styles.editBtn}>
+                      <Link href={`/admin/dashboard/menus/create?id=${menu.id}`} className="editBtn">
                         Edit
                       </Link>
-                      <button onClick={() => handleDelete(menu.id)} className={styles.deleteBtn}>
+                      <button onClick={() => handleDelete(menu.id)} className="deleteBtn">
                         Delete
                       </button>
                     </div>

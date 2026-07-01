@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import styles from './brand.module.css';
 import { getBrands, createBrand, updateBrand, deleteBrand } from '@/actions/brandActions';
 
 interface Brand {
@@ -109,63 +108,63 @@ export default function BrandPage() {
 
   if (isFormView) {
     return (
-      <div className={styles.container}>
-        <div className={styles.formCard}>
-          <div className={styles.formCardHeader}>
-            <h2 className={styles.formCardTitle}>Brand Information</h2>
-            <button className={styles.backBtn} onClick={closeForm}>Back to List</button>
+      <div className="container">
+        <div className="formCard">
+          <div className="formCardHeader">
+            <h2 className="formCardTitle">Brand Information</h2>
+            <button className="backBtn" onClick={closeForm}>Back to List</button>
           </div>
           
           <form onSubmit={handleSubmit}>
-            <div className={styles.formBody}>
+            <div className="formBody">
               
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Name</div>
-                <div className={styles.inputWrapper}>
-                  <input type="text" name="name" className={styles.inputField} placeholder="Brand Name" value={formData.name} onChange={handleInputChange} required />
+              <div className="formRow">
+                <div className="formLabel">Name</div>
+                <div className="inputWrapper">
+                  <input type="text" name="name" className="inputField" placeholder="Brand Name" value={formData.name} onChange={handleInputChange} required />
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Logo</div>
-                <div className={styles.inputWrapper}>
-                  <div className={styles.fileInputWrapper}>
-                    <div className={styles.fileInputBtn}>Browse</div>
-                    <input type="text" name="logo" className={styles.fileInputText} placeholder="Choose File (URL for now)" value={formData.logo} onChange={handleInputChange} />
+              <div className="formRow">
+                <div className="formLabel">Logo</div>
+                <div className="inputWrapper">
+                  <div className="fileInputWrapper">
+                    <div className="fileInputBtn">Browse</div>
+                    <input type="text" name="logo" className="fileInputText" placeholder="Choose File (URL for now)" value={formData.logo} onChange={handleInputChange} />
                   </div>
-                  <span className={styles.helpText}>Upload the brand logo here.</span>
+                  <span className="helpText">Upload the brand logo here.</span>
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Status</div>
-                <div className={styles.inputWrapper}>
-                  <select name="status" className={styles.inputField} value={formData.status} onChange={handleInputChange}>
+              <div className="formRow">
+                <div className="formLabel">Status</div>
+                <div className="inputWrapper">
+                  <select name="status" className="inputField" value={formData.status} onChange={handleInputChange}>
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                   </select>
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Meta Title</div>
-                <div className={styles.inputWrapper}>
-                  <input type="text" name="meta_title" className={styles.inputField} placeholder="Meta Title" value={formData.meta_title} onChange={handleInputChange} />
+              <div className="formRow">
+                <div className="formLabel">Meta Title</div>
+                <div className="inputWrapper">
+                  <input type="text" name="meta_title" className="inputField" placeholder="Meta Title" value={formData.meta_title} onChange={handleInputChange} />
                 </div>
               </div>
 
-              <div className={styles.formRow}>
-                <div className={styles.formLabel}>Meta Description</div>
-                <div className={styles.inputWrapper}>
-                  <textarea name="meta_description" className={styles.inputField} placeholder="Meta Description" value={formData.meta_description} onChange={handleInputChange} rows={3} />
+              <div className="formRow">
+                <div className="formLabel">Meta Description</div>
+                <div className="inputWrapper">
+                  <textarea name="meta_description" className="inputField" placeholder="Meta Description" value={formData.meta_description} onChange={handleInputChange} rows={3} />
                 </div>
               </div>
 
             </div>
             
-            <div className={styles.formFooter}>
-              <button type="button" className={styles.backBtn} onClick={closeForm}>Cancel</button>
-              <button type="submit" className={styles.submitBtnCard}>
+            <div className="formFooter">
+              <button type="button" className="backBtn" onClick={closeForm}>Cancel</button>
+              <button type="submit" className="submitBtnCard">
                 {editingId ? 'Update Brand' : 'Save'}
               </button>
             </div>
@@ -176,17 +175,17 @@ export default function BrandPage() {
   }
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Brands</h1>
-        <button className={styles.addBtn} onClick={() => openForm()}>+ Add New Brand</button>
+    <div className="container">
+      <header className="header">
+        <h1 className="title">Brands</h1>
+        <button className="addBtn" onClick={() => openForm()}>+ Add New Brand</button>
       </header>
 
-      <div className={styles.tableContainer}>
+      <div className="tableContainer">
         {loading ? (
           <p style={{ padding: '2rem' }}>Loading brands...</p>
         ) : (
-          <table className={styles.table}>
+          <table className="table">
             <thead>
               <tr>
                 <th>ID</th>
@@ -207,14 +206,14 @@ export default function BrandPage() {
                   </td>
                   <td>{brand.name}</td>
                   <td>
-                    <span className={`${styles.status} ${brand.status === 'active' ? styles.statusActive : styles.statusInactive}`}>
+                    <span className={`status ${brand.status === 'active' ? 'statusActive' : 'statusInactive'}`}>
                       {brand.status}
                     </span>
                   </td>
                   <td>
-                    <div className={styles.actions}>
-                      <button className={styles.editBtn} onClick={() => openForm(brand)}>Edit</button>
-                      <button className={styles.deleteBtn} onClick={() => handleDelete(brand.id)}>Delete</button>
+                    <div className="actions">
+                      <button className="editBtn" onClick={() => openForm(brand)}>Edit</button>
+                      <button className="deleteBtn" onClick={() => handleDelete(brand.id)}>Delete</button>
                     </div>
                   </td>
                 </tr>

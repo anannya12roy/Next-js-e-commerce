@@ -3,7 +3,6 @@
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import styles from '../../items.module.css';
 import { getMenuItems, deleteMenuItem } from '@/actions/menuActions';
 
 export default function MenuItemsPage({ params }: { params: Promise<{ id: string }> }) {
@@ -81,24 +80,24 @@ export default function MenuItemsPage({ params }: { params: Promise<{ id: string
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Menu Items</h1>
-        <Link href={`/admin/dashboard/menus/${menuId}/items/create`} className={styles.addBtn}>
+    <div className="container">
+      <div className="header">
+        <h1 className="title">Menu Items</h1>
+        <Link href={`/admin/dashboard/menus/${menuId}/items/create`} className="addBtn">
           Add New Item
         </Link>
       </div>
 
-      <div className={styles.filters}>
+      <div className="filters">
         <input 
           type="text" 
           placeholder="Filter by Name" 
-          className={styles.filterInput} 
+          className="filterInput" 
           value={nameFilter}
           onChange={(e) => setNameFilter(e.target.value)}
         />
         <select 
-          className={styles.filterSelect}
+          className="filterSelect"
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
         >
@@ -107,20 +106,20 @@ export default function MenuItemsPage({ params }: { params: Promise<{ id: string
           <option value="page">Page</option>
           <option value="custom">Custom Link</option>
         </select>
-        <button className={styles.filterBtn}>Filter</button>
+        <button className="filterBtn">Filter</button>
         <button 
-          className={styles.clearBtn}
+          className="clearBtn"
           onClick={() => { setNameFilter(''); setTypeFilter(''); }}
         >
           Clear Filters
         </button>
       </div>
 
-      <div className={styles.tableContainer}>
+      <div className="tableContainer">
         {loading ? (
           <p style={{ padding: '24px' }}>Loading items...</p>
         ) : (
-          <table className={styles.table}>
+          <table className="table">
             <thead>
               <tr>
                 <th>#</th>
@@ -140,7 +139,7 @@ export default function MenuItemsPage({ params }: { params: Promise<{ id: string
                   <td>
                     <input 
                       type="number" 
-                      className={styles.orderInput} 
+                      className="orderInput" 
                       value={item.sort_order}
                       readOnly
                     />
@@ -154,11 +153,11 @@ export default function MenuItemsPage({ params }: { params: Promise<{ id: string
                     }
                   </td>
                   <td>
-                    <div className={styles.actions}>
-                      <Link href={`/admin/dashboard/menus/${menuId}/items/create?id=${item.id}`} className={styles.editBtn}>
+                    <div className="actions">
+                      <Link href={`/admin/dashboard/menus/${menuId}/items/create?id=${item.id}`} className="editBtn">
                         Edit
                       </Link>
-                      <button onClick={() => handleDelete(item.id)} className={styles.deleteBtn}>
+                      <button onClick={() => handleDelete(item.id)} className="deleteBtn">
                         Delete
                       </button>
                     </div>

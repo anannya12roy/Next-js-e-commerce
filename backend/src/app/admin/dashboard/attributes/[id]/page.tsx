@@ -3,7 +3,6 @@
 import React, { useState, useEffect, use } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import styles from '../attributes.module.css';
 import { getAttribute, createAttributeValue, updateAttributeValue, deleteAttributeValue } from '@/actions/attributeActions';
 
 interface AttributeValue {
@@ -118,11 +117,11 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Attribute Detail</h1>
+    <div className="container">
+      <div className="header">
+        <h1 className="title">Attribute Detail</h1>
         <button 
-          className={styles.exportBtn} 
+          className="exportBtn" 
           style={{ backgroundColor: '#6b7280' }} 
           onClick={() => router.push('/admin/dashboard/attributes')}
         >
@@ -130,17 +129,17 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
         </button>
       </div>
 
-      <div className={styles.contentWrapper}>
+      <div className="contentWrapper">
         
         {/* Main Content Area */}
-        <div className={styles.mainCol}>
-          <div className={styles.cardHeader}>
+        <div className="mainCol">
+          <div className="cardHeader">
             {loading ? 'Loading...' : attribute?.name}
           </div>
           {loading ? (
             <p style={{ padding: '24px' }}>Loading values...</p>
           ) : (
-            <table className={styles.table}>
+            <table className="table">
               <thead>
                 <tr>
                   <th>#</th>
@@ -158,14 +157,14 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
                     <td>
                       <div style={{ display: 'flex' }}>
                         <button 
-                          className={`${styles.actionBtn} ${styles.editBtn}`} 
+                          className={`actionBtn editBtn`} 
                           onClick={() => handleEdit(val)}
                           title="Edit"
                         >
                           ✏️
                         </button>
                         <button 
-                          className={`${styles.actionBtn} ${styles.deleteBtn}`} 
+                          className={`actionBtn deleteBtn`} 
                           onClick={() => handleDelete(val.id)}
                           title="Delete"
                         >
@@ -177,7 +176,7 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
                 ))}
                 {(!attribute?.values || attribute.values.length === 0) && (
                   <tr>
-                    <td colSpan={4} className={styles.emptyState}>No values found for this attribute.</td>
+                    <td colSpan={4} className="emptyState">No values found for this attribute.</td>
                   </tr>
                 )}
               </tbody>
@@ -186,28 +185,28 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
         </div>
 
         {/* Sidebar Area */}
-        <div className={styles.sideCol}>
-          <div className={styles.formCard}>
-            <div className={styles.cardHeader}>
+        <div className="sideCol">
+          <div className="formCard">
+            <div className="cardHeader">
               {editingId ? 'Edit Attribute Value' : 'Add New Attribute Value'}
             </div>
-            <form onSubmit={handleSubmit} className={styles.formBody}>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Attribute Name</label>
+            <form onSubmit={handleSubmit} className="formBody">
+              <div className="formGroup">
+                <label className="label">Attribute Name</label>
                 <input 
                   type="text" 
-                  className={styles.input} 
+                  className="input" 
                   value={attribute?.name || ''}
                   disabled
                   style={{ backgroundColor: '#f3f4f6', cursor: 'not-allowed' }}
                 />
               </div>
 
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Attribute Value *</label>
+              <div className="formGroup">
+                <label className="label">Attribute Value *</label>
                 <input 
                   type="text" 
-                  className={styles.input} 
+                  className="input" 
                   placeholder="e.g. Red, XL" 
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
@@ -215,11 +214,11 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
                 />
               </div>
 
-              <div className={styles.formGroup}>
-                <label className={styles.label}>Sort Order</label>
+              <div className="formGroup">
+                <label className="label">Sort Order</label>
                 <input 
                   type="number" 
-                  className={styles.input} 
+                  className="input" 
                   value={sortOrder}
                   onChange={(e) => setSortOrder(e.target.value)}
                 />
@@ -227,26 +226,26 @@ export default function AttributeDetailPage({ params }: { params: Promise<{ id: 
               
               <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                 {editingId && (
-                  <button type="button" className={styles.exportBtn} style={{ backgroundColor: '#9ca3af' }} onClick={resetForm}>
+                  <button type="button" className="exportBtn" style={{ backgroundColor: '#9ca3af' }} onClick={resetForm}>
                     Cancel
                   </button>
                 )}
-                <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                <button type="submit" className="submitBtn" disabled={isSubmitting}>
                   {isSubmitting ? 'Saving...' : 'Save'}
                 </button>
               </div>
             </form>
           </div>
 
-          <div className={styles.formCard}>
-            <div className={styles.cardHeader}>
+          <div className="formCard">
+            <div className="cardHeader">
               Select Excel File
             </div>
-            <div className={styles.formBody}>
-              <div className={styles.uploadGroup}>
-                <input type="file" className={styles.input} style={{ flex: 1, padding: '6px' }} />
-                <button className={styles.uploadBtn}>Upload</button>
-                <button className={styles.exportBtn}>Export</button>
+            <div className="formBody">
+              <div className="uploadGroup">
+                <input type="file" className="input" style={{ flex: 1, padding: '6px' }} />
+                <button className="uploadBtn">Upload</button>
+                <button className="exportBtn">Export</button>
               </div>
               <p style={{ fontSize: '12px', color: '#6b7280' }}>
                 * Excel upload is visual placeholder for now.

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import styles from './media.module.css';
 import { getMedia, uploadMedia, deleteMedia } from '@/actions/mediaActions';
 
 interface MediaFile {
@@ -178,28 +177,28 @@ export default function MediaPage() {
 
   if (isUploadView) {
     return (
-      <div className={styles.container}>
-        <div className={styles.headerCard}>
-          <h1 className={styles.title}>Upload New File</h1>
-          <button className={styles.backBtn} onClick={() => setIsUploadView(false)}>
+      <div className="container">
+        <div className="headerCard">
+          <h1 className="title">Upload New File</h1>
+          <button className="backBtn" onClick={() => setIsUploadView(false)}>
             &lt; Back to uploaded files
           </button>
         </div>
 
-        <div className={styles.uploadCard}>
-          <div className={styles.uploadCardHeader}>
+        <div className="uploadCard">
+          <div className="uploadCardHeader">
             Drag & drop your files
           </div>
-          <div className={styles.dropzoneContainer}>
+          <div className="dropzoneContainer">
             <div 
-              className={`${styles.dropzone} ${isDragging ? styles.dropzoneActive : ''}`}
+              className={`dropzone ${isDragging ? 'dropzoneActive' : ''}`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               onClick={triggerFileInput}
             >
-              <div className={styles.dropzoneText}>
-                Drop files here, paste or <span className={styles.browseLink}>Browse</span>
+              <div className="dropzoneText">
+                Drop files here, paste or <span className="browseLink">Browse</span>
               </div>
             </div>
           </div>
@@ -207,14 +206,14 @@ export default function MediaPage() {
           <input 
             type="file" 
             ref={fileInputRef} 
-            className={styles.hiddenFileInput} 
+            className="hiddenFileInput" 
             onChange={handleFileChange}
             accept="image/*" 
           />
         </div>
         
         {toastMessage && (
-          <div className={`${styles.toast} ${toastMessage.isError ? styles.toastError : ''}`}>
+          <div className={`toast ${toastMessage.isError ? 'toastError' : ''}`}>
             {toastMessage.text}
           </div>
         )}
@@ -223,62 +222,62 @@ export default function MediaPage() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.headerCard}>
-        <h1 className={styles.title}>All uploaded files</h1>
-        <div className={styles.controls}>
-          <select className={styles.select}>
+    <div className="container">
+      <div className="headerCard">
+        <h1 className="title">All uploaded files</h1>
+        <div className="controls">
+          <select className="select">
             <option>Sort by newest</option>
             <option>Sort by oldest</option>
             <option>Sort by smallest</option>
             <option>Sort by largest</option>
           </select>
-          <input type="text" placeholder="Search your files" className={styles.searchInput} />
-          <button className={styles.searchBtn}>Search</button>
+          <input type="text" placeholder="Search your files" className="searchInput" />
+          <button className="searchBtn">Search</button>
           
-          <button className={styles.uploadBtn} onClick={() => setIsUploadView(true)}>Upload New</button>
+          <button className="uploadBtn" onClick={() => setIsUploadView(true)}>Upload New</button>
         </div>
       </div>
 
       {loading ? (
         <p>Loading files...</p>
       ) : (
-        <div className={styles.grid}>
+        <div className="grid">
           {files.map((file) => (
-            <div key={file.id} className={styles.card}>
-              <div className={styles.imageWrapper}>
-                <img src={file.url} alt={file.original_name} className={styles.image} />
+            <div key={file.id} className="card">
+              <div className="imageWrapper">
+                <img src={file.url} alt={file.original_name} className="image" />
                 
                 {/* Three dots menu */}
                 <button 
-                  className={styles.menuBtn} 
+                  className="menuBtn" 
                   onClick={() => setActiveDropdown(activeDropdown === file.id ? null : file.id)}
                 >
                   &#8942;
                 </button>
 
                 {activeDropdown === file.id && (
-                  <div className={styles.dropdown}>
-                    <button className={styles.dropdownItem} onClick={() => showDetails(file)}>
-                      <span className={styles.dropdownIcon}>&#8505;</span> Details Info
+                  <div className="dropdown">
+                    <button className="dropdownItem" onClick={() => showDetails(file)}>
+                      <span className="dropdownIcon">&#8505;</span> Details Info
                     </button>
-                    <button className={styles.dropdownItem} onClick={() => handleDownload(file.url, file.original_name)}>
-                      <span className={styles.dropdownIcon}>&#8681;</span> Download
+                    <button className="dropdownItem" onClick={() => handleDownload(file.url, file.original_name)}>
+                      <span className="dropdownIcon">&#8681;</span> Download
                     </button>
-                    <button className={styles.dropdownItem} onClick={() => handleCopyLink(file.url)}>
-                      <span className={styles.dropdownIcon}>&#128279;</span> Copy Link
+                    <button className="dropdownItem" onClick={() => handleCopyLink(file.url)}>
+                      <span className="dropdownIcon">&#128279;</span> Copy Link
                     </button>
-                    <button className={`${styles.dropdownItem} ${styles.dropdownItemDelete}`} onClick={() => triggerDelete(file.id)}>
-                      <span className={styles.dropdownIcon}>&#128465;</span> Delete
+                    <button className={`dropdownItem dropdownItemDelete`} onClick={() => triggerDelete(file.id)}>
+                      <span className="dropdownIcon">&#128465;</span> Delete
                     </button>
                   </div>
                 )}
               </div>
-              <div className={styles.cardFooter}>
-                <div className={styles.filename} title={file.original_name}>
+              <div className="cardFooter">
+                <div className="filename" title={file.original_name}>
                   {file.original_name}
                 </div>
-                <div className={styles.filesize}>
+                <div className="filesize">
                   {formatSize(file.size)}
                 </div>
               </div>
@@ -295,13 +294,13 @@ export default function MediaPage() {
 
       {/* Delete Confirmation Modal */}
       {deletingId !== null && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <h3 className={styles.modalTitle}>Delete File</h3>
-            <p className={styles.modalText}>Are you sure you want to delete this file? This action cannot be undone.</p>
-            <div className={styles.modalActions}>
-              <button className={styles.modalBtnCancel} onClick={() => setDeletingId(null)}>Cancel</button>
-              <button className={styles.modalBtnConfirm} onClick={confirmDelete}>Delete</button>
+        <div className="modalOverlay">
+          <div className="modalContent">
+            <h3 className="modalTitle">Delete File</h3>
+            <p className="modalText">Are you sure you want to delete this file? This action cannot be undone.</p>
+            <div className="modalActions">
+              <button className="modalBtnCancel" onClick={() => setDeletingId(null)}>Cancel</button>
+              <button className="modalBtnConfirm" onClick={confirmDelete}>Delete</button>
             </div>
           </div>
         </div>
@@ -310,42 +309,42 @@ export default function MediaPage() {
       {/* Details Info Drawer */}
       {detailsFile !== null && (
         <>
-          <div className={styles.drawerOverlay} onClick={() => setDetailsFile(null)}></div>
-          <div className={styles.drawer}>
-            <div className={styles.drawerHeader}>
-              <h2 className={styles.drawerTitle}>File Info</h2>
-              <button className={styles.closeBtn} onClick={() => setDetailsFile(null)}>&#10005;</button>
+          <div className="drawerOverlay" onClick={() => setDetailsFile(null)}></div>
+          <div className="drawer">
+            <div className="drawerHeader">
+              <h2 className="drawerTitle">File Info</h2>
+              <button className="closeBtn" onClick={() => setDetailsFile(null)}>&#10005;</button>
             </div>
             
-            <div className={styles.drawerBody}>
-              <div className={styles.detailGroup}>
-                <div className={styles.detailLabel}>File Name</div>
-                <input type="text" readOnly className={styles.detailInput} value={detailsFile.filename} />
+            <div className="drawerBody">
+              <div className="detailGroup">
+                <div className="detailLabel">File Name</div>
+                <input type="text" readOnly className="detailInput" value={detailsFile.filename} />
               </div>
               
-              <div className={styles.detailGroup}>
-                <div className={styles.detailLabel}>File Type</div>
-                <input type="text" readOnly className={styles.detailInput} value={detailsFile.mime_type.split('/')[0] || detailsFile.mime_type} />
+              <div className="detailGroup">
+                <div className="detailLabel">File Type</div>
+                <input type="text" readOnly className="detailInput" value={detailsFile.mime_type.split('/')[0] || detailsFile.mime_type} />
               </div>
               
-              <div className={styles.detailGroup}>
-                <div className={styles.detailLabel}>File Size</div>
-                <input type="text" readOnly className={styles.detailInput} value={formatSize(detailsFile.size)} />
+              <div className="detailGroup">
+                <div className="detailLabel">File Size</div>
+                <input type="text" readOnly className="detailInput" value={formatSize(detailsFile.size)} />
               </div>
               
-              <div className={styles.detailGroup}>
-                <div className={styles.detailLabel}>Uploaded By</div>
-                <input type="text" readOnly className={styles.detailInput} value="Admin" />
+              <div className="detailGroup">
+                <div className="detailLabel">Uploaded By</div>
+                <input type="text" readOnly className="detailInput" value="Admin" />
               </div>
               
-              <div className={styles.detailGroup}>
-                <div className={styles.detailLabel}>Uploaded At</div>
-                <input type="text" readOnly className={styles.detailInput} value={formatDate(detailsFile.created_at)} />
+              <div className="detailGroup">
+                <div className="detailLabel">Uploaded At</div>
+                <input type="text" readOnly className="detailInput" value={formatDate(detailsFile.created_at)} />
               </div>
             </div>
             
-            <div className={styles.drawerFooter}>
-              <button className={styles.downloadBtnDrawer} onClick={() => handleDownload(detailsFile.url, detailsFile.original_name)}>
+            <div className="drawerFooter">
+              <button className="downloadBtnDrawer" onClick={() => handleDownload(detailsFile.url, detailsFile.original_name)}>
                 Download
               </button>
             </div>
@@ -355,7 +354,7 @@ export default function MediaPage() {
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className={`${styles.toast} ${toastMessage.isError ? styles.toastError : ''}`}>
+        <div className={`toast ${toastMessage.isError ? 'toastError' : ''}`}>
           {toastMessage.text}
         </div>
       )}

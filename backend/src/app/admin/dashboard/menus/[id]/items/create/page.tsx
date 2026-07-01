@@ -3,7 +3,6 @@
 import React, { useState, useEffect, Suspense, use } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
-import styles from '../../../items.module.css';
 import { getMenuItem, createMenuItem, updateMenuItem, getMenuItems } from '@/actions/menuActions';
 import { getCategories } from '@/actions/categoryActions';
 
@@ -159,13 +158,13 @@ function CreateItemForm({ menuId }: { menuId: number }) {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>{editId ? 'Edit Item' : 'Add Item to Menu'}</h1>
+    <div className="container">
+      <div className="header">
+        <h1 className="title">{editId ? 'Edit Item' : 'Add Item to Menu'}</h1>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button 
             onClick={() => router.push(`/admin/dashboard/menus/${menuId}/items`)} 
-            className={styles.addBtn}
+            className="addBtn"
             style={{ backgroundColor: '#f97316' }}
           >
             Back to List
@@ -173,13 +172,13 @@ function CreateItemForm({ menuId }: { menuId: number }) {
         </div>
       </div>
 
-      <div className={styles.formContainer}>
+      <div className="formContainer">
         <form onSubmit={handleSubmit}>
           
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Type</label>
+          <div className="formGroup">
+            <label className="label">Type</label>
             <select 
-              className={styles.input} 
+              className="input" 
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
@@ -189,11 +188,11 @@ function CreateItemForm({ menuId }: { menuId: number }) {
             </select>
           </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Name</label>
+          <div className="formGroup">
+            <label className="label">Name</label>
             <input 
               type="text" 
-              className={styles.input} 
+              className="input" 
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Footwear"
@@ -202,10 +201,10 @@ function CreateItemForm({ menuId }: { menuId: number }) {
           </div>
 
           {type === 'category' && (
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Category</label>
+            <div className="formGroup">
+              <label className="label">Category</label>
               <select 
-                className={styles.input} 
+                className="input" 
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
               >
@@ -218,11 +217,11 @@ function CreateItemForm({ menuId }: { menuId: number }) {
           )}
 
           {type === 'custom' && (
-            <div className={styles.formGroup}>
-              <label className={styles.label}>URL</label>
+            <div className="formGroup">
+              <label className="label">URL</label>
               <input 
                 type="text" 
-                className={styles.input} 
+                className="input" 
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://..."
@@ -230,10 +229,10 @@ function CreateItemForm({ menuId }: { menuId: number }) {
             </div>
           )}
 
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Parent Item</label>
+          <div className="formGroup">
+            <label className="label">Parent Item</label>
             <select 
-              className={styles.input} 
+              className="input" 
               value={parentId}
               onChange={(e) => setParentId(e.target.value)}
             >
@@ -244,20 +243,20 @@ function CreateItemForm({ menuId }: { menuId: number }) {
             </select>
           </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Order</label>
+          <div className="formGroup">
+            <label className="label">Order</label>
             <input 
               type="number" 
-              className={styles.input} 
+              className="input" 
               value={order}
               onChange={(e) => setOrder(e.target.value)}
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Target</label>
-            <div className={styles.radioGroup}>
-              <label className={styles.radioLabel}>
+          <div className="formGroup">
+            <label className="label">Target</label>
+            <div className="radioGroup">
+              <label className="radioLabel">
                 <input 
                   type="radio" 
                   name="target" 
@@ -267,7 +266,7 @@ function CreateItemForm({ menuId }: { menuId: number }) {
                 />
                 Self
               </label>
-              <label className={styles.radioLabel}>
+              <label className="radioLabel">
                 <input 
                   type="radio" 
                   name="target" 
@@ -280,8 +279,8 @@ function CreateItemForm({ menuId }: { menuId: number }) {
             </div>
           </div>
 
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Menu Highlight Color</label>
+          <div className="formGroup">
+            <label className="label">Menu Highlight Color</label>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
               <input 
                 type="color" 
@@ -291,7 +290,7 @@ function CreateItemForm({ menuId }: { menuId: number }) {
               />
               <input 
                 type="text" 
-                className={styles.input} 
+                className="input" 
                 value={highlightColor}
                 onChange={(e) => setHighlightColor(e.target.value)}
                 placeholder="Selected color hex"
@@ -307,7 +306,7 @@ function CreateItemForm({ menuId }: { menuId: number }) {
             </div>
           </div>
 
-          <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+          <button type="submit" className="submitBtn" disabled={isSubmitting}>
             {isSubmitting ? 'Saving...' : (editId ? 'Update Item' : 'Add Item')}
           </button>
         </form>

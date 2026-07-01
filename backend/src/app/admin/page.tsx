@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import styles from "./login.module.css";
 import { loginUser } from "@/actions/authActions";
+import './admin-global.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState("admin@gmail.com");
@@ -37,19 +37,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.blob}></div>
-      <div className={styles.blob2}></div>
-      <div className={styles.glassPanel}>
-        <div className={styles.header}>
+    <div className="container">
+      <div className="blob"></div>
+      <div className="blob2"></div>
+      <div className="glassPanel">
+        <div className="header">
           <h2>Welcome Back</h2>
           <p>Login to access the admin dashboard</p>
         </div>
         
-        {error && <div className={styles.errorMessage}>{error}</div>}
+        {error && <div className="errorMessage">{error}</div>}
 
-        <form onSubmit={handleLogin} className={styles.form}>
-          <div className={styles.inputGroup}>
+        <form onSubmit={handleLogin} className="form">
+          <div className="inputGroup">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -61,7 +61,7 @@ export default function LoginPage() {
             />
           </div>
           
-          <div className={styles.inputGroup}>
+          <div className="inputGroup">
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -73,7 +73,7 @@ export default function LoginPage() {
             />
           </div>
 
-          <button type="submit" disabled={loading} className={styles.loginBtn}>
+          <button type="submit" disabled={loading} className="loginBtn">
             {loading ? "Authenticating..." : "Sign In"}
           </button>
         </form>
