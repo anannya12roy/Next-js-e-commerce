@@ -14,6 +14,7 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [productsOpen, setProductsOpen] = useState(true);
   const [attributesOpen, setAttributesOpen] = useState(false);
+  const [blogOpen, setBlogOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const match = (text: string) => !searchTerm || text.toLowerCase().includes(searchTerm.toLowerCase());
@@ -21,7 +22,7 @@ export default function DashboardLayout({
   const productsMenu = [
     { label: 'Add New product', href: '/admin/dashboard/products/add', bullet: 'solid' },
     { label: 'All Products', href: '/admin/dashboard/products', bullet: 'solid' },
-    { label: 'Product Info Export', href: '#', bullet: 'solid' },
+    { label: 'Product Info Export', href: '/admin/dashboard/products/info/export', bullet: 'solid' },
     { label: 'Product Stock Visibility', href: '#', bullet: 'solid' },
     { label: 'Gift Vouchers', href: '#', bullet: 'solid' },
     { label: 'Update Gift Voucher', href: '#', bullet: 'solid' },
@@ -29,8 +30,8 @@ export default function DashboardLayout({
     { label: 'Products Ordering', href: '#', bullet: 'solid' },
     { label: 'Product Collection', href: '#', bullet: 'solid' },
     { label: 'Digital Products', href: '#', bullet: 'solid' },
-    { label: 'Bulk Import', href: '#', bullet: 'solid' },
-    { label: 'Category Bulk Link', href: '#', bullet: 'solid' },
+    { label: 'Bulk Import', href: '/admin/dashboard/products/import', bullet: 'solid' },
+    { label: 'Category Bulk Link', href: '/admin/dashboard/category/bulk-link', bullet: 'solid' },
     { label: 'Category', href: '/admin/dashboard/category', bullet: 'solid' },
     { label: 'Brand', href: '/admin/dashboard/category/brand', bullet: 'solid' },
     { label: 'Product Reviews', href: '/admin/dashboard/category/reviews', bullet: 'solid' },
@@ -49,8 +50,14 @@ export default function DashboardLayout({
     { label: 'Publication', href: '/admin/dashboard/features/publication', bullet: 'hollow' },
   ];
 
+  const blogMenu = [
+    { label: 'All Posts', href: '/admin/dashboard/blog', bullet: 'hollow' },
+    { label: 'Categories', href: '/admin/dashboard/blog-category', bullet: 'solid' },
+  ];
+
   const filteredProducts = productsMenu.filter(item => match(item.label));
   const filteredAttributes = attributesMenu.filter(item => match(item.label));
+  const filteredBlog = blogMenu.filter(item => match(item.label));
 
   const HomeIcon = () => (
     <svg className="navIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -85,6 +92,12 @@ export default function DashboardLayout({
   const AttributesIcon = () => (
     <svg className="navIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+    </svg>
+  );
+
+  const BlogIcon = () => (
+    <svg className="navIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
     </svg>
   );
 
@@ -185,6 +198,36 @@ export default function DashboardLayout({
                 {(attributesOpen || searchTerm) && (
                   <div className="submenu">
                     {filteredAttributes.map((item, index) => (
+                      <Link key={index} href={item.href} className={`subNavItem ${pathname === item.href ? 'activeSub' : ''}`}>
+                        {item.bullet === 'solid' ? (
+                          <span className="bullet"></span>
+                        ) : (
+                          <span style={{ fontSize: '10px', marginRight: '8px', opacity: 0.5 }}>○</span>
+                        )}
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Blog Management Accordion */}
+            {(match('Blog Management') || filteredBlog.length > 0) && (
+              <div className="navItemWrapper">
+                <div 
+                  className={`navItem ${pathname?.includes('/admin/dashboard/blog') || blogOpen || searchTerm ? 'active' : ''}`}
+                  onClick={() => setBlogOpen(!blogOpen)}
+                >
+                  <div className="navItemContent">
+                    <BlogIcon /> Blog Management
+                  </div>
+                  <ChevronIcon expanded={blogOpen || !!searchTerm} />
+                </div>
+                
+                {(blogOpen || searchTerm) && (
+                  <div className="submenu">
+                    {filteredBlog.map((item, index) => (
                       <Link key={index} href={item.href} className={`subNavItem ${pathname === item.href ? 'activeSub' : ''}`}>
                         {item.bullet === 'solid' ? (
                           <span className="bullet"></span>

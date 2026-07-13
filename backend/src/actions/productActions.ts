@@ -165,3 +165,34 @@ export async function updateProductStatus(productId: number, field: string, valu
     return { success: false, error: 'Internal server error' };
   }
 }
+
+export async function exportProducts(categoryId: string | null, brandId: string | null) {
+  try {
+    let query = `
+      SELECT 
+        p.id, p.name, p.barcode, p.sku, p.price, p.stock,
+        b.name as brand_name,
+        (SELECT c.name FROM product_categories_mapping pcm JOIN categories c ON pcm.category_id = c.id WHERE pcm.product_id = p.id AND pcm.is_suggestion = false LIMIT 1) as category_name
+      FROM products p
+      LEFT JOIN brands b ON p.brand_id = b.id
+      WHERE 1=1
+    `;
+    const params: any[] = [];
+
+    if (categoryId) {
+      query += ` AND p.id IN (SELECT product_id FROM product_categories_mapping WHERE category_id = ?)`;
+      params.push(categoryId);
+    }
+    
+    if (brandId) {
+      query += ` AND p.brand_id = ?`;
+      params.push(brandId);
+    }
+
+    const [rows] = await pool.query(query, params);
+    return { success: true, data: rows };
+  } catch (error) {
+    console.error('Error exporting products:', error);
+    return { success: false, error: 'Internal server error' };
+  }
+}
