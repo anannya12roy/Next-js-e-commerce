@@ -40,7 +40,59 @@ async function createTables() {
         FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
       )
     `);
-    
+    console.log('Creating coupons table...');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS coupons (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        code VARCHAR(50) NOT NULL UNIQUE,
+        discount_type ENUM('percentage', 'fixed') NOT NULL DEFAULT 'fixed',
+        discount_amount DECIMAL(10, 2) NOT NULL,
+        min_spend DECIMAL(10, 2) DEFAULT 0,
+        max_discount DECIMAL(10, 2) DEFAULT NULL,
+        start_date DATETIME,
+        end_date DATETIME,
+        usage_limit_total INT DEFAULT NULL,
+        usage_limit_per_user INT DEFAULT NULL,
+        used_count INT DEFAULT 0,
+        is_active BOOLEAN DEFAULT TRUE,
+        condition_type ENUM('none', 'first_purchase', 'next_purchase', 'total_orders', 'category', 'product') DEFAULT 'none',
+        condition_value JSON DEFAULT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      )
+    `);
+    console.log('Creating circular_discounts table...');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS circular_discounts (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        circular_number VARCHAR(255) NOT NULL UNIQUE,
+        start_time DATETIME NOT NULL,
+        end_time DATETIME NOT NULL,
+        status ENUM('Active', 'Inactive') DEFAULT 'Active',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      )
+    `);
+
+    console.log('Creating circular_discount_items table...');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS circular_discount_items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        circular_id INT NOT NULL,
+        product_id INT NOT NULL,
+        barcode VARCHAR(255) NOT NULL,
+        discount_percent DECIMAL(5, 2) DEFAULT 0,
+        discount_amount DECIMAL(10, 2) DEFAULT 0,
+        start_time DATETIME,
+        end_time DATETIME,
+        status ENUM('Active', 'Inactive') DEFAULT 'Active',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (circular_id) REFERENCES circular_discounts(id) ON DELETE CASCADE,
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+      )
+    `);
+
     console.log('Tables created successfully!');
   } catch (err) {
     console.error('Error creating tables:', err);

@@ -15,6 +15,7 @@ export default function DashboardLayout({
   const [productsOpen, setProductsOpen] = useState(true);
   const [attributesOpen, setAttributesOpen] = useState(false);
   const [blogOpen, setBlogOpen] = useState(false);
+  const [marketingOpen, setMarketingOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const match = (text: string) => !searchTerm || text.toLowerCase().includes(searchTerm.toLowerCase());
@@ -55,9 +56,15 @@ export default function DashboardLayout({
     { label: 'Categories', href: '/admin/dashboard/blog-category', bullet: 'solid' },
   ];
 
+  const marketingMenu = [
+    { label: 'Coupon', href: '/admin/dashboard/marketing/coupon', bullet: 'solid' },
+    { label: 'Circular Discount', href: '/admin/dashboard/marketing/circular-discount', bullet: 'solid' },
+  ];
+
   const filteredProducts = productsMenu.filter(item => match(item.label));
   const filteredAttributes = attributesMenu.filter(item => match(item.label));
   const filteredBlog = blogMenu.filter(item => match(item.label));
+  const filteredMarketing = marketingMenu.filter(item => match(item.label));
 
   const HomeIcon = () => (
     <svg className="navIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -98,6 +105,12 @@ export default function DashboardLayout({
   const BlogIcon = () => (
     <svg className="navIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+    </svg>
+  );
+
+  const MarketingIcon = () => (
+    <svg className="navIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
     </svg>
   );
 
@@ -228,6 +241,36 @@ export default function DashboardLayout({
                 {(blogOpen || searchTerm) && (
                   <div className="submenu">
                     {filteredBlog.map((item, index) => (
+                      <Link key={index} href={item.href} className={`subNavItem ${pathname === item.href ? 'activeSub' : ''}`}>
+                        {item.bullet === 'solid' ? (
+                          <span className="bullet"></span>
+                        ) : (
+                          <span style={{ fontSize: '10px', marginRight: '8px', opacity: 0.5 }}>○</span>
+                        )}
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Marketing Accordion */}
+            {(match('Marketing') || filteredMarketing.length > 0) && (
+              <div className="navItemWrapper">
+                <div 
+                  className={`navItem ${pathname?.includes('/admin/dashboard/marketing') || marketingOpen || searchTerm ? 'active' : ''}`}
+                  onClick={() => setMarketingOpen(!marketingOpen)}
+                >
+                  <div className="navItemContent">
+                    <MarketingIcon /> Marketing
+                  </div>
+                  <ChevronIcon expanded={marketingOpen || !!searchTerm} />
+                </div>
+                
+                {(marketingOpen || searchTerm) && (
+                  <div className="submenu">
+                    {filteredMarketing.map((item, index) => (
                       <Link key={index} href={item.href} className={`subNavItem ${pathname === item.href ? 'activeSub' : ''}`}>
                         {item.bullet === 'solid' ? (
                           <span className="bullet"></span>
