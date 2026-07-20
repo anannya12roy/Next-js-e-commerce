@@ -36,10 +36,10 @@ export default function Footer() {
           <div className={styles.linkCol}>
             <h4 className={styles.title}>Support</h4>
             <ul className={styles.list}>
-              <li><Link href="/faq">FAQ</Link></li>
-              <li><Link href="/shipping">Shipping & Returns</Link></li>
+              <li><Link href="/pages/faq">FAQ</Link></li>
+              <li><Link href="/pages/shipping">Shipping & Returns</Link></li>
               <li><Link href="/contact">Contact Us</Link></li>
-              <li><Link href="/terms">Terms of Service</Link></li>
+              <li><Link href="/pages/terms">Terms of Service</Link></li>
             </ul>
           </div>
 
