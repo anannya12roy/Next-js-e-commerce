@@ -535,3 +535,131 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Address Book */
+.darkHeader {
+  background-color: #111827;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px 8px 0 0;
+}
+
+.addressContent {
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  background-color: white;
+}
+
+.sectionHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.sectionTitleWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #111827;
+}
+
+.addNewBtn {
+  background-color: #1e3a8a;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.addNewBtn:hover {
+  opacity: 0.9;
+}
+
+.defaultPill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+}
+
+.default-yes {
+  background-color: #059669;
+}
+
+.default-no {
+  background-color: #ef4444;
+}
+
+.actionBtn {
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  color: #374151;
+}
+
+.actionBtn.delete {
+  border-color: #fca5a5;
+  color: #ef4444;
+}
+
+.addressForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.select, .textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  background-color: white;
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
