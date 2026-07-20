@@ -128,7 +128,10 @@ export default function ProductGrid() {
                 </div>
                 
                 <div className={styles.content}>
-                  <Link href={`/product/${product.id}`} className={styles.name}>
+                  <Link 
+                    href={`/product/${product.name.toLowerCase().replace(/ /g, '-')}`} 
+                    className={styles.name}
+                  >
                     {product.name}
                   </Link>
                   <div className={styles.priceContainer}>

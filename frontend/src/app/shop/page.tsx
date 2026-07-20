@@ -204,7 +204,10 @@ export default function ShopPage() {
                   </div>
                   
                   <div className={productStyles.content}>
-                    <Link href={`/product/${product.id}`} className={productStyles.name}>
+                    <Link 
+                      href={`/product/${product.name.toLowerCase().replace(/ /g, '-')}`} 
+                      className={productStyles.name}
+                    >
                       {product.name}
                     </Link>
                     <div className={productStyles.priceContainer}>
