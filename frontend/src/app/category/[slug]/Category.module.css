@@ -1,0 +1,41 @@
+.banner {
+  width: 100%;
+  height: 320px;
+  background-color: #111827;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bannerImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.bannerContent {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: white;
+}
+
+.bannerTitle {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+}
+
+.bannerSubtitle {
+  font-size: 18px;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}

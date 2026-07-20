@@ -1,0 +1,218 @@
+.section {
+  padding: 80px 0;
+  background-color: #ffffff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #f3f4f6;
+  margin-bottom: 16px;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hoverImage {
+  opacity: 0;
+  z-index: 2;
+}
+
+.card:hover .imagePlaceholder:not(.hoverImage) {
+  opacity: 0;
+}
+
+.card:hover .hoverImage {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: white;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  z-index: 10;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.discountBadge {
+  background-color: #ef4444; /* Red for discount */
+  color: white;
+  font-weight: 700;
+}
+
+.actionOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+}
+
+.card:hover .actionOverlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.addToCartBtn {
+  width: 100%;
+  background-color: white;
+  color: #111827;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.addToCartBtn:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.name:hover {
+  color: var(--primary);
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.priceDiscounted {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ef4444; /* Red color for discounted price */
+}
+
+.originalPrice {
+  font-size: 14px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.footer {
+  margin-top: 56px;
+  display: flex;
+  justify-content: center;
+}
+
+.viewAllBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 40px;
+  background-color: white;
+  color: #111827;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 9999px;
+  border: 1px solid #d1d5db;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.viewAllBtn:hover {
+  border-color: #111827;
+  background-color: #f9fafb;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

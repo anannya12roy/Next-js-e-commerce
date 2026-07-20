@@ -21,7 +21,7 @@ export default function BlogCategoryListPage() {
     setIsLoading(true);
     const res = await getBlogCategories();
     if (res.success && res.data) {
-      setCategories(res.data);
+      setCategories(res.data as any[]);
     }
     setIsLoading(false);
   };

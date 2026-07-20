@@ -165,6 +165,16 @@ export default function DashboardLayout({
               </Link>
             )}
 
+            {match('Orders') && (
+              <Link href="/admin/dashboard/orders" className={`navItem ${pathname?.includes('/admin/dashboard/orders') ? 'active' : ''}`}>
+                <div className="navItemContent">
+                  <svg className="navIcon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg> Orders
+                </div>
+              </Link>
+            )}
+
             {/* Products Accordion */}
             {(match('Products') || filteredProducts.length > 0) && (
               <div className="navItemWrapper">

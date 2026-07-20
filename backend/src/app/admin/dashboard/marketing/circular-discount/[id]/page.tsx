@@ -72,7 +72,7 @@ export default function CircularDiscountDetailsPage() {
       setDiscountAmount('');
       fetchData();
     } else {
-      alert(\`Error: \${res.error}\`);
+      alert(`Error: ${res.error}`);
     }
   };
 

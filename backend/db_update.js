@@ -93,6 +93,42 @@ async function createTables() {
       )
     `);
 
+    console.log('Creating orders table...');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS orders (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        customer_id INT DEFAULT NULL,
+        customer_name VARCHAR(255) NOT NULL,
+        customer_email VARCHAR(255) DEFAULT NULL,
+        customer_phone VARCHAR(50) NOT NULL,
+        shipping_address TEXT NOT NULL,
+        total_amount DECIMAL(10, 2) NOT NULL,
+        payment_method VARCHAR(50) NOT NULL,
+        payment_status ENUM('Pending', 'Paid', 'Failed') DEFAULT 'Pending',
+        order_status ENUM('Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled') DEFAULT 'Pending',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      )
+    `);
+
+    console.log('Creating order_items table...');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS order_items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        order_id INT NOT NULL,
+        product_id INT DEFAULT NULL,
+        variant_id INT DEFAULT NULL,
+        product_name VARCHAR(255) NOT NULL,
+        quantity INT NOT NULL,
+        price DECIMAL(10, 2) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+        FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL,
+        FOREIGN KEY (variant_id) REFERENCES product_variants(id) ON DELETE SET NULL
+      )
+    `);
+
     console.log('Tables created successfully!');
   } catch (err) {
     console.error('Error creating tables:', err);
